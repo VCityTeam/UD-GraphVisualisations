@@ -7,21 +7,21 @@ A web application or visualazing graph data
 
 ## To install
 clone repository 
-'''bash
+```bash
 git clone https://github.com/VCityTeam/UD-GraphVisualisations.git
 cd UD-GraphVisualisations
-''' 
+``` 
 
 Install and build 
-'''bash
+```bash
 npm install 
 npm run build
-'''
+```
 
 ## To run 
 Start python server 
-'''bash
+```bash
 npm run start
-'''
+```
 
 Navigate to [localhost:8000](http://localhost:8000)
