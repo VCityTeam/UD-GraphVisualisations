@@ -1,0 +1,1599 @@
+Eu entendi que o que vinha da direita teria um nível hierarquico maior, com isso fiz a seguinte árvore:
+
+Myriel, Labarre, Tholomyes, Jondrette: only children
+=================================================================
+*RELATIONS UNIQUEMENT*
+TODAS as relações presentes
+
+Napoleon
+	Myriel
+
+Mlle Baptistine
+	Myriel
+
+Mme.Magloire
+	Myriel
+	Mlle Bapstine
+
+ContessdeLo
+	Myriel
+
+Geborand
+	Myriel
+
+Champtercier
+	Myriel
+
+Cravette
+	Myriel
+
+Count
+	Myriel
+
+OldMan
+	Myriel
+
+Valjean
+	Labarre
+	Mme magloire
+	Mlle Baptiste
+	Myriel
+
+Marguerite
+	Valjean
+
+Mme.deR
+	Valejean
+
+Isabeau
+	Valejean
+
+Gervais
+	Valjean
+
+Listolier
+	Tholomyes
+
+Fameuil
+	Listolier
+		Tholomyes
+
+Blacheville
+	Fameuil
+		Listolier
+			Tholomyes
+
+Favourite
+	Blacheville
+		Fameuil
+			Listolier
+				Tholomyes
+
+Dahlia
+	Favourite
+		Blacheville
+			Fameuil
+				Listolier
+					Tholomyes
+
+Zephine
+	Dahlia
+		Favourite
+			Blacheville
+				Fameuil
+					Listolier
+						Tholomyes
+
+Fantine
+	Zephine
+		Dahlia
+			Favourite
+				Blacheville
+					Fameuil
+						Listolier
+							Tholomyes
+	Marguerite
+		Valjean
+			Labarre
+			MMe Magloire
+				Mlle Baptistine
+					Myriel
+
+//DA UM CONFERE DE FATINE PRA CIMA
+
+Mme.Thenardier
+	Fantine
+	Valejan
+
+Thenardier
+	MmeThenardier
+	Valejan
+	Fatine
+
+Cosette
+	MMe Thernardier
+	Thernardier
+	Valjean	
+	Tholomyes
+
+Javert
+	Cosette
+	MMe Thernardier
+	Thernardier
+	Valjean	
+	Fantine
+
+Fauchelevent
+	Javert
+	Valjean	
+
+Bamatabois
+	Fantine
+	Javert
+	Valjean	
+
+Perpetue
+	Fantine
+
+Simplice
+	Perpetue
+	Fantine
+	Valjean
+	Javert
+
+Scaufflaire
+	Valjean
+
+Woman1
+	Valjean
+	Javert
+	
+Judge
+	Valjean
+	Bamatabois
+
+Champmathieu
+	Judge
+	Valjean
+	Bamatabois
+	
+Brevet
+	Champmathieu
+	Judge
+	Valjean
+	Bamatabois
+
+Chenildieu
+	Brevet
+	Champmathieu
+	Judge
+	Valjean
+	Bamatabois
+	
+Cochepaille
+	Chenildieu
+	Brevet
+	Champmathieu
+	Judge
+	Valjean
+	Bamatabois
+	
+Pontmercy
+	Thernardier
+
+Boulatruelle
+	Thernardier
+
+Eponine
+	Mme.Thernardier
+	Thernardier
+
+Anzelma
+	Eponine
+	Mme.Thernardier
+	Thernardier
+
+Woman2
+	Valjean
+	Cosette
+	Javert
+
+MotherInnocent
+	Fauchelevent
+	Valjean
+
+Gribier
+	Fauchelevent
+
+Mme.Burgon
+	Jondrette
+
+Gavroche
+	Mme.Burgon
+	Thernardier
+	Javert
+	Valjean
+
+Gillenormand
+	Cosette
+	Valjean
+
+Magnon
+	Gillenormand
+	Mme.Thernardier
+
+Mlle.Gillenormand
+	Cosette
+	Gillenormand
+	Valjean
+
+Mme.Pontmercy
+	Mlle.Gillenormand
+	Pontmercy
+
+Mlle.Vaubois
+	Mlle.Gillenormand
+
+Lt.Gillenormand
+	Mlle.Gillenormand
+	Gillernormand
+	Cosette
+
+Marius
+	Mlle.Gillenormand
+	Gillernormand
+	Pontmercy
+	Lt.Gillenormand
+	Cosette
+	Valjean
+	Tholomyes
+	Eponine
+	Gavroche
+
+BaronessT
+	Marius
+	Gillernormand
+
+Mabeuf
+	Marius
+	Epoine
+	Gavroche
+
+Enjolras
+	Marius
+	Gavroche
+	Javert
+	Mabeuf
+	Valjean
+
+Combeferre	
+	Enjolras
+	Marius
+	Gavroche
+	Mabeuf
+
+Prouvaire
+	Combeferre	
+	Enjolras
+	Gavroche
+
+Feuilly
+	Prouvaire
+	Combeferre	
+	Enjolras
+	Gavroche
+	Mabeuf
+	Marius
+
+Courfeyrac
+	Marius
+	Enjolras
+	Combeferre
+	Gavroche
+	Mabeuf
+	Epoine
+	Feuilly
+	Prouvaire
+
+Bahorel	
+	Courfeyrac
+	Marius
+	Enjolras
+	Combeferre
+	Gavroche
+	Mabeuf
+	Feuilly
+	Prouvaire
+
+Bossuet	
+	Bahorel	
+	Courfeyrac
+	Marius
+	Enjolras
+	Combeferre
+	Gavroche
+	Mabeuf
+	Feuilly
+	Prouvaire
+	Valjean
+
+Joly
+	Bossuet	
+	Bahorel	
+	Courfeyrac
+	Marius
+	Enjolras
+	Combeferre
+	Gavroche
+	Mabeuf
+	Feuilly
+	Prouvaire
+	
+Grantaire
+	Joly
+	Bossuet	
+	Bahorel	
+	Courfeyrac
+	Enjolras
+	Combeferre
+	Gavroche
+	Feuilly
+	Prouvaire
+
+MotherPlutarch
+	Mabeuf
+
+Gueulemer
+	Thernrardier
+	Valjean
+	Mme.Thernadier
+	Javert
+	Gavroche
+	Eponine
+
+Babet
+	Gueulemer
+	Thernrardier
+	Valjean
+	Mme.Thernadier
+	Javert
+	Gavroche
+	Eponine
+
+Claquesous
+	Babet
+	Gueulemer
+	Thernrardier
+	Valjean
+	Mme.Thernadier
+	Javert
+	Enjolras
+	Eponine
+
+Montparnasse
+	Claquesous
+	Babet
+	Gueulemer
+	Gavroche
+	Thernrardier
+	Valjean
+	Javert
+	Eponine
+
+Toussaint
+	Cosette
+	Javert
+	Valjean
+
+Child1
+	Gavroche
+
+Child2
+	Child1
+	Gavroche
+
+Brujon
+	Babet
+	Gueulemer
+	Thernadier
+	Gavroche
+	Epoine
+	Claquesous
+	Montparnasse
+
+Mme.Hucheloup
+	Bossuet
+	Joly
+	Grentaire
+	Bahorel
+	Courfeyrac
+	Gavroche
+	Enjolras
+==========================================================
+
+
+Relations between relations
+
+apenas uma lista de RELAÇÕES, se tiver apenas um nome não entra
+
+
+MMe Magloire
+	Mlle Baptistine
+		Myriel
+
+Valjean
+	Labarre
+	MMe Magloire
+		Mlle Baptistine
+			Myriel
+
+Marguerite
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Mme.deR
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Isabeau
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Gervais
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Fameuil
+	Listolier
+		Tholomyes
+
+Blacheville
+	Fameuil
+		Listolier
+			Tholomyes
+
+Favourite
+	Blacheville
+		Fameuil
+			Listolier
+				Tholomyes
+
+Dahlia
+	Favourite
+		Blacheville
+			Fameuil
+				Listolier
+					Tholomyes
+
+Zephine
+	Dahlia
+		Favourite
+			Blacheville
+				Fameuil
+					Listolier
+						Tholomyes
+
+Fantine
+	Zephine
+		Dahlia
+			Favourite
+				Blacheville
+					Fameuil
+						Listolier
+							Tholomyes
+	Marguerite
+		Valjean
+			Labarre
+			MMe Magloire
+				Mlle Baptistine
+					Myriel
+
+Mme.Thenardier
+	Fantine
+		Zephine
+			Dahlia
+				Favourite
+					Blacheville
+						Fameuil
+							Listolier
+								Tholomyes
+	Valejan
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Thenardier
+	Mme.Thenardier
+		Fantine
+			Zephine
+				Dahlia
+					Favourite
+						Blacheville
+							Fameuil
+								Listolier
+									Tholomyes
+		Valejan
+			Labarre
+			MMe Magloire
+				Mlle Baptistine
+					Myriel
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+	Fantine
+		Zephine
+			Dahlia
+				Favourite
+					Blacheville
+						Fameuil
+							Listolier
+								Tholomyes
+		Marguerite
+			Valjean
+				Labarre
+				MMe Magloire
+					Mlle Baptistine
+						Myriel
+
+Cosette
+	Mme.Thenardier
+		Fantine
+			Zephine
+				Dahlia
+					Favourite
+						Blacheville
+							Fameuil
+								Listolier
+									Tholomyes
+		Valejan
+			Labarre
+			MMe Magloire
+				Mlle Baptistine
+					Myriel
+	Thenardier
+		Mme.Thenardier
+			Fantine
+				Zephine
+					Dahlia
+						Favourite
+							Blacheville
+								Fameuil
+									Listolier
+										Tholomyes
+			Valejan
+				Labarre
+				MMe Magloire
+					Mlle Baptistine
+						Myriel
+		Valjean
+			Labarre
+			MMe Magloire
+				Mlle Baptistine
+					Myriel
+		Fantine
+			Zephine
+				Dahlia
+					Favourite
+						Blacheville
+							Fameuil
+								Listolier
+									Tholomyes
+			Marguerite
+				Valjean
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+	Tholomyes
+
+Javert
+	Cosette
+	MMe Thernardier
+	Thernardier
+	Valjean	
+	Fantine
+
+Fauchelevent
+	Javert
+	Valjean	
+
+
+
+==========================================
+RELATIONS COMBINED (I did that for know how many chieldren the fater will have)
+
+FOI CITADO O NOME É APAGADO
+
+
+ContessdeLo
+	Myriel
+
+Geborand
+	Myriel
+
+Champtercier
+	Myriel
+
+Cravette
+	Myriel
+
+Count
+	Myriel
+
+OldMan
+	Myriel
+
+Napoleon
+	Myriel
+
+Mme.deR
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Isabeau
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Gervais
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Simplice
+	Perpetue
+		Fantine
+			Zephine
+				Dahlia
+					Favourite
+						Blacheville
+							Fameuil
+								Listolier
+									Tholomyes
+			Marguerite
+				Valjean
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+	Javert
+		Cosette
+			Thenardier
+				Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+						Marguerite
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel
+
+Scaufflaire
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+
+Woman1
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+	Javert
+		Cosette
+			Thenardier
+				Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+						Marguerite
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel
+	
+Cochepaille
+	Chenildieu
+		Brevet
+			Champmathieu
+				Judge
+					Valjean
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+					Bamatabois
+						Javert
+							Cosette
+								Thenardier
+									Mme.Thenardier
+										Fantine
+											Zephine
+												Dahlia
+													Favourite
+														Blacheville
+															Fameuil
+																Listolier
+																	Tholomyes
+											Marguerite
+												Valjean
+													Labarre
+													MMe Magloire
+														Mlle Baptistine
+															Myriel
+
+Boulatruelle	
+	Thenardier
+		Mme.Thenardier
+			Fantine
+				Zephine
+					Dahlia
+						Favourite
+							Blacheville
+								Fameuil
+									Listolier
+										Tholomyes
+			Valejan
+				Labarre
+				MMe Magloire
+					Mlle Baptistine
+						Myriel
+		Valjean
+			Labarre
+			MMe Magloire
+				Mlle Baptistine
+					Myriel
+		Fantine
+			Zephine
+				Dahlia
+					Favourite
+						Blacheville
+							Fameuil
+								Listolier
+									Tholomyes
+			Marguerite
+				Valjean
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+	
+Anzelma
+	Eponine
+		Thenardier
+			Mme.Thenardier
+				Fantine
+					Zephine
+						Dahlia
+							Favourite
+								Blacheville
+									Fameuil
+										Listolier
+											Tholomyes
+				Valejan
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+			Valjean
+				Labarre
+				MMe Magloire
+					Mlle Baptistine
+						Myriel
+			Fantine
+				Zephine
+					Dahlia
+						Favourite
+							Blacheville
+								Fameuil
+									Listolier
+										Tholomyes
+				Marguerite
+					Valjean
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+
+Woman2
+	Valjean
+		Labarre
+		MMe Magloire
+			Mlle Baptistine
+				Myriel
+	Javert
+		Cosette
+			Thenardier
+				Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+						Marguerite
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel
+
+MotherInnocent
+	Fauchelevent
+		Javert
+			Cosette
+				Thenardier
+					Mme.Thenardier
+						Fantine
+							Zephine
+								Dahlia
+									Favourite
+										Blacheville
+											Fameuil
+												Listolier
+													Tholomyes
+							Marguerite
+								Valjean
+									Labarre
+									MMe Magloire
+										Mlle Baptistine
+											Myriel
+
+Gribier
+	Fauchelevent
+		Javert
+			Cosette
+				Thenardier
+					Mme.Thenardier
+						Fantine
+							Zephine
+								Dahlia
+									Favourite
+										Blacheville
+											Fameuil
+												Listolier
+													Tholomyes
+							Marguerite
+								Valjean
+									Labarre
+									MMe Magloire
+										Mlle Baptistine
+											Myriel
+
+Magnon
+	Gillenormand
+		Cosette
+			Thenardier
+				Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+						Marguerite
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel
+
+Mme.Pontmercy
+	Mlle.Gillenormand
+		Gillenormand
+			Cosette
+				Thenardier
+					Mme.Thenardier
+						Fantine
+							Zephine
+								Dahlia
+									Favourite
+										Blacheville
+											Fameuil
+												Listolier
+													Tholomyes
+							Marguerite
+								Valjean
+									Labarre
+									MMe Magloire
+										Mlle Baptistine
+											Myriel
+	Pontmercy
+		Thenardier
+			Mme.Thenardier
+				Fantine
+					Zephine
+						Dahlia
+							Favourite
+								Blacheville
+									Fameuil
+										Listolier
+											Tholomyes
+				Valejan
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+			Valjean
+				Labarre
+				MMe Magloire
+					Mlle Baptistine
+						Myriel
+			Fantine
+				Zephine
+					Dahlia
+						Favourite
+							Blacheville
+								Fameuil
+									Listolier
+										Tholomyes
+				Marguerite
+					Valjean
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+
+Mlle.Vaubois
+	Mlle.Gillenormand
+		Gillenormand
+			Cosette
+				Thenardier
+					Mme.Thenardier
+						Fantine
+							Zephine
+								Dahlia
+									Favourite
+										Blacheville
+											Fameuil
+												Listolier
+													Tholomyes
+							Marguerite
+								Valjean
+									Labarre
+									MMe Magloire
+										Mlle Baptistine
+											Myriel
+
+BaronessT
+	Marius
+		Lt.Gillenormand
+			Mlle.Gillenormand
+				Gillenormand
+					Cosette
+						Thenardier
+							Mme.Thenardier
+								Fantine
+									Zephine
+										Dahlia
+											Favourite
+												Blacheville
+													Fameuil
+														Listolier
+															Tholomyes
+									Marguerite
+										Valjean
+											Labarre
+											MMe Magloire
+												Mlle Baptistine
+													Myriel
+		Eponine
+			Thenardier
+				Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+					Valejan
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+				Valjean
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+				Fantine
+					Zephine
+						Dahlia
+							Favourite
+								Blacheville
+									Fameuil
+										Listolier
+											Tholomyes
+					Marguerite
+						Valjean
+							Labarre
+							MMe Magloire
+								Mlle Baptistine
+									Myriel
+		Pontmercy
+			Thenardier
+				Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+					Valejan
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+					Marguerite
+						Valjean
+							Labarre
+							MMe Magloire
+								Mlle Baptistine
+									Myriel
+		Gavroche
+			Mme.Burgon
+				Jondrette
+			Thenardier
+				Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+					Valejan
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+				Valjean
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+			Javert
+				Cosette
+					Thenardier
+						Mme.Thenardier
+							Fantine
+								Zephine
+									Dahlia
+										Favourite
+											Blacheville
+												Fameuil
+													Listolier
+														Tholomyes
+								Marguerite
+									Valjean
+										Labarre
+										MMe Magloire
+											Mlle Baptistine
+												Myriel
+
+MotherPlutarch
+	Mabeuf
+		Marius
+			Lt.Gillenormand
+				Mlle.Gillenormand
+					Gillenormand
+						Cosette
+							Thenardier
+								Mme.Thenardier
+									Fantine
+										Zephine
+											Dahlia
+												Favourite
+													Blacheville
+														Fameuil
+															Listolier
+																Tholomyes
+										Marguerite
+											Valjean
+												Labarre
+												MMe Magloire
+													Mlle Baptistine
+														Myriel
+			Eponine
+				Thenardier
+					Mme.Thenardier
+						Fantine
+							Zephine
+								Dahlia
+									Favourite
+										Blacheville
+											Fameuil
+												Listolier
+													Tholomyes
+						Valejan
+							Labarre
+							MMe Magloire
+								Mlle Baptistine
+									Myriel
+					Valjean
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+						Marguerite
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel
+			Pontmercy
+				Thenardier
+					Mme.Thenardier
+						Fantine
+							Zephine
+								Dahlia
+									Favourite
+										Blacheville
+											Fameuil
+												Listolier
+													Tholomyes
+						Valejan
+							Labarre
+							MMe Magloire
+								Mlle Baptistine
+									Myriel
+						Marguerite
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel
+			Gavroche
+				Mme.Burgon
+					Jondrette
+				Thenardier
+					Mme.Thenardier
+						Fantine
+							Zephine
+								Dahlia
+									Favourite
+										Blacheville
+											Fameuil
+												Listolier
+													Tholomyes
+						Valejan
+							Labarre
+							MMe Magloire
+								Mlle Baptistine
+									Myriel
+					Valjean
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+				Javert
+					Cosette
+						Thenardier
+							Mme.Thenardier
+								Fantine
+									Zephine
+										Dahlia
+											Favourite
+												Blacheville
+													Fameuil
+														Listolier
+															Tholomyes
+									Marguerite
+										Valjean
+											Labarre
+											MMe Magloire
+												Mlle Baptistine
+													Myriel	mer
+	Gavroche
+		Mme.Burgon
+			Jondrette
+		Thenardier
+			Mme.Thenardier
+				Fantine
+					Zephine
+						Dahlia
+							Favourite
+								Blacheville
+									Fameuil
+										Listolier
+											Tholomyes
+				Valejan
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+			Valjean
+				Labarre
+				MMe Magloire
+					Mlle Baptistine
+						Myriel
+		Javert
+			Cosette
+				Thenardier
+					Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+						Marguerite
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel	
+	Eponine
+		Thenardier
+			Mme.Thenardier
+				Fantine
+					Zephine
+						Dahlia
+							Favourite
+								Blacheville
+									Fameuil
+										Listolier
+											Tholomyes
+				Valejan
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+			Valjean
+				Labarre
+				MMe Magloire
+					Mlle Baptistine
+						Myriel
+			Fantine
+				Zephine
+					Dahlia
+						Favourite
+							Blacheville
+								Fameuil
+									Listolier
+										Tholomyes
+				Marguerite
+					Valjean
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+	
+Toussaint
+	Javert
+		Cosette
+			Thenardier
+				Mme.Thenardier
+				Fantine
+					Zephine
+						Dahlia
+							Favourite
+								Blacheville
+									Fameuil
+										Listolier
+											Tholomyes
+					Marguerite
+						Valjean
+							Labarre
+							MMe Magloire
+								Mlle Baptistine
+									Myriel	
+
+Child2
+	Child1
+		Gavroche
+			Mme.Burgon
+				Jondrette
+			Thenardier
+				Mme.Thenardier
+					Fantine
+						Zephine
+							Dahlia
+								Favourite
+									Blacheville
+										Fameuil
+											Listolier
+												Tholomyes
+					Valejan
+						Labarre
+						MMe Magloire
+							Mlle Baptistine
+								Myriel
+				Valjean
+					Labarre
+					MMe Magloire
+						Mlle Baptistine
+							Myriel
+			Javert
+				Cosette
+					Thenardier
+						Mme.Thenardier
+						Fantine
+							Zephine
+								Dahlia
+									Favourite
+										Blacheville
+											Fameuil
+												Listolier
+													Tholomyes
+							Marguerite
+								Valjean
+									Labarre
+									MMe Magloire
+										Mlle Baptistine
+											Myriel	
+
+Brujon
+	Montparnasse
+		Claquesous
+			Babet
+				Gueulemer
+					Gavroche
+						Mme.Burgon
+							Jondrette
+						Thenardier
+							Mme.Thenardier
+								Fantine
+									Zephine
+										Dahlia
+											Favourite
+												Blacheville
+													Fameuil
+														Listolier
+															Tholomyes
+								Valejan
+									Labarre
+									MMe Magloire
+										Mlle Baptistine
+											Myriel
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel
+						Javert
+							Cosette
+								Thenardier
+									Mme.Thenardier
+									Fantine
+										Zephine
+											Dahlia
+												Favourite
+													Blacheville
+														Fameuil
+															Listolier
+																Tholomyes
+										Marguerite
+											Valjean
+												Labarre
+												MMe Magloire
+													Mlle Baptistine
+														Myriel	
+					Eponine
+						Thenardier
+							Mme.Thenardier
+								Fantine
+									Zephine
+										Dahlia
+											Favourite
+												Blacheville
+													Fameuil
+														Listolier
+															Tholomyes
+								Valejan
+									Labarre
+									MMe Magloire
+										Mlle Baptistine
+											Myriel
+							Valjean
+								Labarre
+								MMe Magloire
+									Mlle Baptistine
+										Myriel
+							Fantine
+								Zephine
+									Dahlia
+										Favourite
+											Blacheville
+												Fameuil
+													Listolier
+														Tholomyes
+								Marguerite
+									Valjean
+										Labarre
+										MMe Magloire
+											Mlle Baptistine
+												Myriel
+	
+Mme.Hucheloup
+	Grantaire
+		Joly
+			Bossuet	
+				Bahorel	
+					Courfeyrac
+						Feuilly
+							Prouvaire
+								Combeferre	
+									Enjolras
+										Mabeuf
+											Marius
+												Lt.Gillenormand
+													Mlle.Gillenormand
+														Gillenormand
+															Cosette
+																Thenardier
+																	Mme.Thenardier
+																		Fantine
+																			Zephine
+																				Dahlia
+																					Favourite
+																						Blacheville
+																							Fameuil
+																								Listolier
+																									Tholomyes
+																			Marguerite
+																				Valjean
+																					Labarre
+																					MMe Magloire
+																						Mlle Baptistine
+																							Myriel
+												Eponine
+													Thenardier
+														Mme.Thenardier
+															Fantine
+																Zephine
+																	Dahlia
+																		Favourite
+																			Blacheville
+																				Fameuil
+																					Listolier
+																						Tholomyes
+															Valejan
+																Labarre
+																MMe Magloire
+																	Mlle Baptistine
+																		Myriel
+														Valjean
+															Labarre
+															MMe Magloire
+																Mlle Baptistine
+																	Myriel
+														Fantine
+															Zephine
+																Dahlia
+																	Favourite
+																		Blacheville
+																			Fameuil
+																				Listolier
+																					Tholomyes
+															Marguerite
+																Valjean
+																	Labarre
+																	MMe Magloire
+																		Mlle Baptistine
+																			Myriel
+												Pontmercy
+													Thenardier
+														Mme.Thenardier
+															Fantine
+																Zephine
+																	Dahlia
+																		Favourite
+																			Blacheville
+																				Fameuil
+																					Listolier
+																						Tholomyes
+															Valejan
+																Labarre
+																MMe Magloire
+																	Mlle Baptistine
+																		Myriel
+															Marguerite
+																Valjean
+																	Labarre
+																	MMe Magloire
+																		Mlle Baptistine
+																			Myriel
+												Gavroche
+													Mme.Burgon
+														Jondrette
+													Thenardier
+														Mme.Thenardier
+															Fantine
+																Zephine
+																	Dahlia
+																		Favourite
+																			Blacheville
+																				Fameuil
+																					Listolier
+																						Tholomyes
+															Valejan
+																Labarre
+																MMe Magloire
+																	Mlle Baptistine
+																		Myriel
+														Valjean
+															Labarre
+															MMe Magloire
+																Mlle Baptistine
+																	Myriel
+													Javert
+														Cosette
+															Thenardier
+																Mme.Thenardier
+																	Fantine
+																		Zephine
+																			Dahlia
+																				Favourite
+																					Blacheville
+																						Fameuil
+																							Listolier
+																								Tholomyes
+																		Marguerite
+																			Valjean
+																				Labarre
+																				MMe Magloire
+																					Mlle Baptistine
+																						Myriel	
+
