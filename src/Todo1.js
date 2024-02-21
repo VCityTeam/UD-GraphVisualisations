@@ -214,8 +214,8 @@ function removeNodes(graph) {
 }
 
 /**
- * @param event
- * @param datum 
+ * @param {Event} event - click event
+ * @param {object} datum - node data 
 */
 function nodeClicked(event, datum) {
   console.log(event);
