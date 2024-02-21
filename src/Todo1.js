@@ -33,7 +33,11 @@ function ForceGraph(
   } = {}
 ) {
   // Compute values.
-  const N = d3.map(nodes, nodeId).map(intern);
+  const N = d3.map(nodes, () => {
+    if node.visualized == true {
+      return node
+    }
+  }, nodeId).map(intern);
   const LS = d3.map(links, linkSource).map(intern);
   const LT = d3.map(links, linkTarget).map(intern);
   if (nodeTitle === undefined) nodeTitle = (_, i) => N[i];
@@ -177,12 +181,13 @@ function readTextFile(file, callback) {
  *    target: string,
  *    value: number
  *  }>}} graph - an object with nodes and links to search within
- * @returns {{ nodes: Array<string>, links: Array<string> }} - returns an object containing an
- * array of strings corresponding to node ids and an array of strings corresponding to link ids
+ * @returns {Array<string>} - returns an array of strings of the child node ids
  */
 function getChildren(id, graph) {
   console.log("called getChildren");
+  var children = [];
   // implement me!
+  return children;
 }
 
 /**
@@ -221,6 +226,7 @@ function nodeClicked(event, datum) {
   console.log(event);
   console.log(datum);
   const children = getChildren(datum.id, miserables);
+  console.log.children;
 }
 
 var miserables = undefined;
