@@ -1,3 +1,6 @@
 dist/
 node_modules/
 package-lock.json
+src/index2.html
+src/relations.txt
+src/Todo1test.js

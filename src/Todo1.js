@@ -33,8 +33,8 @@ function ForceGraph(
   } = {}
 ) {
   // Compute values.
-  const N = d3.map(nodes, () => {
-    if node.visualized == true {
+  const N = d3.map(nodes, (node) => {
+    if (node.visualized == true) {
       return node
     }
   }, nodeId).map(intern);
@@ -157,17 +157,17 @@ function ForceGraph(
   return Object.assign(svg.node(), { scales: { color } });
 }
 
-function readTextFile(file, callback) {
-  var rawFile = new XMLHttpRequest();
-  rawFile.overrideMimeType("application/json");
-  rawFile.open("GET", file, true);
-  rawFile.onreadystatechange = function() {
-      if (rawFile.readyState === 4 && rawFile.status == "200") {
-          callback(rawFile.responseText);
-      }
-  }
-  rawFile.send(null);
-}
+// function readTextFile(file, callback) {
+//   var rawFile = new XMLHttpRequest();
+//   rawFile.overrideMimeType("application/json");
+//   rawFile.open("GET", file, true);
+//   rawFile.onreadystatechange = function() {
+//       if (rawFile.readyState === 4 && rawFile.status == "200") {
+//           callback(rawFile.responseText);
+//       }
+//   }
+//   rawFile.send(null);
+// }
 
 /**
  * Get the child nodes of a node in a graph.
@@ -204,7 +204,14 @@ function getChildren(id, graph) {
 */
 function addNodes(graph) {
   console.log("called addNodes");
-  // implement me!
+  const node = this.svg
+  .on('click', (event, datum) => {
+    this.dispatchEvent({
+      type: 'click',
+      event: target= none,
+      datum: datum,
+    });
+  })
 }
 
 /**
@@ -213,34 +220,30 @@ function addNodes(graph) {
  *  nodes: Array<string}>,
  *  links: Array<string>} graph - an object with ids of nodes and links to remove from the d3 graph
 */
-function removeNodes(graph) {
-  console.log("called removeNodes");
-  // implement me!
-}
+// function removeNodes(graph) {
+//   console.log("called removeNodes");
+//   // implement me!
+// }
 
-/**
- * @param {Event} event - click event
- * @param {object} datum - node data 
+/*
+  @param {Event} event - click event
+  @param {object} datum - node data 
 */
-function nodeClicked(event, datum) {
+/*function nodeClicked(event, datum) {
   console.log(event);
   console.log(datum);
   const children = getChildren(datum.id, miserables);
   console.log.children;
-}
+}*/
 
-var miserables = undefined;
-// readTextFile("src/miserables.json", function(text){
-readTextFile("src/donnesTest.json", function(text){
-  miserables = JSON.parse(text);
-  console.debug(text);
 
-  const chart = ForceGraph(miserables, {
-    nodeId: (d) => d.id,
-    nodeGroup: (d) => d.group,
-    nodeTitle: (d) => `${d.id}\n${d.group}`,
-    linkStrokeWidth: (l) => Math.sqrt(l.value),
-    width: 1200,
-    height: 800,
-  });
+console.debug(miserables);
+
+const chart = ForceGraph(miserables, {
+  nodeId: (d) => d.id,
+  nodeGroup: (d) => d.group,
+  nodeTitle: (d) => `${d.id}\n${d.group}`,
+  linkStrokeWidth: (l) => Math.sqrt(l.value),
+  width: 1200,
+  height: 800,
 });
