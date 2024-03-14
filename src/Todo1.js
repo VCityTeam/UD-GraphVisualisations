@@ -4,10 +4,7 @@ import * as d3 from "d3";
 // Released under the ISC license.
 // https://observablehq.com/@d3/force-directed-graph
 function ForceGraph(
-  {
-    nodes, // an iterable of node objects (typically [{id}, …])
-    links, // an iterable of link objects (typically [{source, target}, …])
-  } = {},
+  data = {},
   {
     nodeId = (d) => d.id, // given d in nodes, returns a unique identifier (string)
     nodeGroup, // given d in nodes, returns an (ordinal) value for color
@@ -32,93 +29,61 @@ function ForceGraph(
     invalidation, // when this promise resolves, stop the simulation
   } = {}
 ) {
-  // Compute values.
-  const N = d3.map(nodes, (node) => {
-    if (node.visualized == true) {
-      return node
-    }
-  }, nodeId).map(intern);
-  const LS = d3.map(links, linkSource).map(intern);
-  const LT = d3.map(links, linkTarget).map(intern);
-  if (nodeTitle === undefined) nodeTitle = (_, i) => N[i];
-  const T = nodeTitle == null ? null : d3.map(nodes, nodeTitle);
-  const G = nodeGroup == null ? null : d3.map(nodes, nodeGroup).map(intern);
-  const W =
-    typeof linkStrokeWidth !== "function"
-      ? null
-      : d3.map(links, linkStrokeWidth);
-  const L = typeof linkStroke !== "function" ? null : d3.map(links, linkStroke);
+  // Specify the color scale.
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-  // Replace the input nodes and links with mutable objects for the simulation.
-  nodes = d3.map(nodes, (_, i) => ({ id: N[i] }));
-  links = d3.map(links, (_, i) => ({ source: LS[i], target: LT[i] }));
+  // The force simulation mutates links and nodes, so create a copy
+  // so that re-evaluating this cell produces the same result.
+  const links = data.links.map((d) => ({ ...d }));
+  const nodes = data.nodes.map((d) => ({ ...d }));
 
-  // Compute default domains.
-  if (G && nodeGroups === undefined) nodeGroups = d3.sort(G);
-
-  // Construct the scales.
-  const color = nodeGroup == null ? null : d3.scaleOrdinal(nodeGroups, colors);
-
-  // Construct the forces.
-  const forceNode = d3.forceManyBody();
-  const forceLink = d3.forceLink(links).id(({ index: i }) => N[i]);
-  if (nodeStrength !== undefined) forceNode.strength(nodeStrength);
-  if (linkStrength !== undefined) forceLink.strength(linkStrength);
-
+  // Create a simulation with several forces.
   const simulation = d3
     .forceSimulation(nodes)
-    .force("link", forceLink)
-    .force("charge", forceNode)
-    .force("center", d3.forceCenter())
+    .force(
+      "link",
+      d3.forceLink(links).id((d) => d.id)
+    )
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", ticked);
 
+  // Create the SVG container.
   const svg = d3
     .create("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("viewBox", [-width / 2, -height / 2, width, height])
-    .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+    .attr("viewBox", [0, 0, width, height])
+    .attr("style", "max-width: 100%; height: auto;");
 
+  // Add a line for each link, and a circle for each node.
   const link = svg
     .append("g")
-    .attr("stroke", typeof linkStroke !== "function" ? linkStroke : null)
-    .attr("stroke-opacity", linkStrokeOpacity)
-    .attr(
-      "stroke-width",
-      typeof linkStrokeWidth !== "function" ? linkStrokeWidth : null
-    )
-    .attr("stroke-linecap", linkStrokeLinecap)
-    .selectAll("line")
+    .attr("stroke", "#999")
+    .attr("stroke-opacity", 0.6)
+    .selectAll()
     .data(links)
-    .join("line");
+    .join("line")
+    .attr("stroke-width", (d) => Math.sqrt(d.value));
 
   const node = svg
     .append("g")
-    .attr("fill", nodeFill)
-    .attr("stroke", nodeStroke)
-    .attr("stroke-opacity", nodeStrokeOpacity)
-    .attr("stroke-width", nodeStrokeWidth)
-    .selectAll("circle")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5)
+    .selectAll()
     .data(nodes)
     .join("circle")
-    .attr("r", nodeRadius)
-    .on('click', (event, datum) => {
-      nodeClicked(event, datum);
-    })
-    .call(drag(simulation));
+    .attr("r", 5)
+    .attr("fill", (d) => color(d.group));
 
-  if (W) link.attr("stroke-width", ({ index: i }) => W[i]);
-  if (L) link.attr("stroke", ({ index: i }) => L[i]);
-  if (G) node.attr("fill", ({ index: i }) => color(G[i]));
-  if (T) node.append("title").text(({ index: i }) => T[i]);
-  if (invalidation != null) invalidation.then(() => simulation.stop());
+  node.append("title").text((d) => d.id);
 
-  function intern(value) {
-    return value !== null && typeof value === "object"
-      ? value.valueOf()
-      : value;
-  }
+  // Add a drag behavior.
+  node.call(
+    d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
+  );
 
+  // Set the position attributes of links and nodes each time the simulation ticks.
   function ticked() {
     link
       .attr("x1", (d) => d.source.x)
@@ -129,32 +94,28 @@ function ForceGraph(
     node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
   }
 
-  function drag(simulation) {
-    function dragstarted(event) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
-    }
-
-    function dragged(event) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
-    }
-
-    function dragended(event) {
-      if (!event.active) simulation.alphaTarget(0);
-      event.subject.fx = null;
-      event.subject.fy = null;
-    }
-
-    return d3
-      .drag()
-      .on("start", dragstarted)
-      .on("drag", dragged)
-      .on("end", dragended);
+  // Reheat the simulation when drag starts, and fix the subject position.
+  function dragstarted(event) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    event.subject.fx = event.subject.x;
+    event.subject.fy = event.subject.y;
   }
-  container.append(svg.node());
-  return Object.assign(svg.node(), { scales: { color } });
+
+  // Update the subject (dragged node) position during drag.
+  function dragged(event) {
+    event.subject.fx = event.x;
+    event.subject.fy = event.y;
+  }
+
+  // Restore the target alpha so the simulation cools after dragging ends.
+  // Unfix the subject position now that it’s no longer being dragged.
+  function dragended(event) {
+    if (!event.active) simulation.alphaTarget(0);
+    event.subject.fx = null;
+    event.subject.fy = null;
+  }
+
+  return svg.node();
 }
 
 // function readTextFile(file, callback) {
@@ -201,17 +162,16 @@ function getChildren(id, graph) {
  *    target: string,
  *    value: number
  *  }>} graph - an object with nodes and links to add to the d3 graph
-*/
+ */
 function addNodes(graph) {
   console.log("called addNodes");
-  const node = this.svg
-  .on('click', (event, datum) => {
+  const node = this.svg.on("click", (event, datum) => {
     this.dispatchEvent({
-      type: 'click',
-      event: target= none,
+      type: "click",
+      event: (target = none),
       datum: datum,
     });
-  })
+  });
 }
 
 /**
@@ -219,7 +179,7 @@ function addNodes(graph) {
  * @param {
  *  nodes: Array<string}>,
  *  links: Array<string>} graph - an object with ids of nodes and links to remove from the d3 graph
-*/
+ */
 // function removeNodes(graph) {
 //   console.log("called removeNodes");
 //   // implement me!
@@ -236,10 +196,10 @@ function addNodes(graph) {
   console.log.children;
 }*/
 
-
 console.debug(miserables);
 
-const chart = ForceGraph(miserables, {
+// create graph
+const graph = ForceGraph(miserables, {
   nodeId: (d) => d.id,
   nodeGroup: (d) => d.group,
   nodeTitle: (d) => `${d.id}\n${d.group}`,
@@ -247,3 +207,7 @@ const chart = ForceGraph(miserables, {
   width: 1200,
   height: 800,
 });
+
+// get container div and attach graph to it
+const container = document.getElementById("container");
+container.append(graph);
