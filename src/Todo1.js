@@ -74,7 +74,8 @@ function ForceGraph(
     .data(nodes)
     .join("circle")
     .attr("r", 5)
-    .attr("fill", (d) => color(d.group));
+    .attr("fill", (d) => color(d.group))
+    .on("click", getChildren());
 
   node.append("title").text((d) => d.id);
 
@@ -118,17 +119,8 @@ function ForceGraph(
   return svg.node();
 }
 
-// function readTextFile(file, callback) {
-//   var rawFile = new XMLHttpRequest();
-//   rawFile.overrideMimeType("application/json");
-//   rawFile.open("GET", file, true);
-//   rawFile.onreadystatechange = function() {
-//       if (rawFile.readyState === 4 && rawFile.status == "200") {
-//           callback(rawFile.responseText);
-//       }
-//   }
-//   rawFile.send(null);
-// }
+//erased the comment part of readfile
+
 
 /**
  * Get the child nodes of a node in a graph.
@@ -144,12 +136,21 @@ function ForceGraph(
  *  }>}} graph - an object with nodes and links to search within
  * @returns {Array<string>} - returns an array of strings of the child node ids
  */
-function getChildren(id, graph) {
+
+const links =miserables.links//acessing links in miserables 
+function getChildren(d) {
   console.log("called getChildren");
-  var children = [];
-  // implement me!
+  const children = [];
+  links.forEach(link => {
+    if (link.source === d) {
+      children.push(link.target);
+    }
+  });
+  console.log(children)
   return children;
 }
+
+
 
 /**
  * Add a set of nodes and their adjacent links to the graph.
@@ -163,16 +164,16 @@ function getChildren(id, graph) {
  *    value: number
  *  }>} graph - an object with nodes and links to add to the d3 graph
  */
-function addNodes(graph) {
-  console.log("called addNodes");
-  const node = this.svg.on("click", (event, datum) => {
-    this.dispatchEvent({
-      type: "click",
-      event: (target = none),
-      datum: datum,
-    });
-  });
-}
+// function addNodes(graph) {
+//   console.log("called addNodes");
+//   const node = this.svg.on("click", (event, datum) => {
+//     this.dispatchEvent({
+//       type: "click",
+//       event: (target = none),
+//       datum: datum,
+//     });
+//   });
+// }
 
 /**
  * Add a set of nodes and their adjacent links to the graph.
@@ -193,10 +194,10 @@ function addNodes(graph) {
   console.log(event);
   console.log(datum);
   const children = getChildren(datum.id, miserables);
-  console.log.children;
+  console.log(children);
 }*/
 
-console.debug(miserables);
+
 
 // create graph
 const graph = ForceGraph(miserables, {
