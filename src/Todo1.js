@@ -75,7 +75,7 @@ function ForceGraph(
     .join("circle")
     .attr("r", 5)
     .attr("fill", (d) => color(d.group))
-    .on("click", getChildren());
+    .on("click", (d) => getChildren(d));
 
   node.append("title").text((d) => d.id);
 
@@ -137,19 +137,21 @@ function ForceGraph(
  * @returns {Array<string>} - returns an array of strings of the child node ids
  */
 
-const links =miserables.links//acessing links in miserables 
+const links = miserables.links//acessing links in miserables 
+const nodes = miserables.nodes// acessing nodes in miserables 
 function getChildren(d) {
-  console.log("called getChildren");
+  console.log(d)
   const children = [];
   links.forEach(link => {
     if (link.source === d) {
       children.push(link.target);
     }
-  });
-  console.log(children)
+  }
+  );
+  console.log("end of function");
+  console.log(children);
   return children;
 }
-
 
 
 /**
