@@ -36,13 +36,16 @@ function ForceGraph(
   // so that re-evaluating this cell produces the same result.
   const links = data.links.map((d) => ({ ...d }));
   const nodes = data.nodes.map((d) => ({ ...d }));
-
+  console.debug(nodes);
+  console.debug(links);
+  console.debug(getVisibleNodes(nodes));
+  console.debug(getVisibleLinks(links));
   // Create a simulation with several forces.
   const simulation = d3
-    .forceSimulation(nodes)
+    .forceSimulation(getVisibleNodes(nodes))
     .force(
       "link",
-      d3.forceLink(links).id((d) => d.id)
+      d3.forceLink(getVisibleLinks(links)).id((d) => d.id)
     )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2))
@@ -62,7 +65,7 @@ function ForceGraph(
     .attr("stroke", "#999")
     .attr("stroke-opacity", 0.6)
     .selectAll()
-    .data(links)
+    .data(links.filter((link) => link.source.visible && link.target.visible))
     .join("line")
     .attr("stroke-width", (d) => Math.sqrt(d.value));
 
@@ -71,11 +74,20 @@ function ForceGraph(
     .attr("stroke", "#fff")
     .attr("stroke-width", 1.5)
     .selectAll()
-    .data(nodes)
+    .data(getVisibleNodes(nodes))
     .join("circle")
     .attr("r", 5)
     .attr("fill", (d) => color(d.group))
-    .on("click", (d) => getChildren(d));
+    .on("click", (_event, target) => {
+      const children = getChildren(target);
+      // TODO: for every child, set visible = false
+    });
+
+  // TODO: move simulation, node, and links to an update function
+  // node.enter() should include code for drawing new nodes https://d3js.org/d3-selection/joining#selection_enter
+  // node.merge() or .join() is maybe necessary as well https://d3js.org/d3-selection/joining#selection_join ; https://d3js.org/d3-selection/joining#selection_join
+  // node.exit() should include .remove() https://d3js.org/d3-selection/joining#selection_exit
+  // look at example https://observablehq.com/@d3/collapsible-tree for how this is done with trees
 
   node.append("title").text((d) => d.id);
 
@@ -116,11 +128,37 @@ function ForceGraph(
     event.subject.fy = null;
   }
 
+  function getChildren(d) {
+    console.debug(d);
+    const children = [];
+    links.forEach((link) => {
+      if (link.source === d.id) {
+        children.push(link.target);
+      }
+    });
+    console.info("end of function");
+    console.debug(children);
+    return children;
+  }
+
+  function getVisibleNodes(nodes) {
+    return nodes.filter((d) => d.visible);
+  }
+
+  function getVisibleLinks(links) {
+    return links.filter((link) => {
+      const source = nodes.filter((node) => node.id == link.source);
+      const target = nodes.filter((node) => node.id == link.target);
+      return source[0].visible && target[0].visible;
+    });
+  }
+
+  // TODO: call update here
+
   return svg.node();
 }
 
 //erased the comment part of readfile
-
 
 /**
  * Get the child nodes of a node in a graph.
@@ -136,23 +174,6 @@ function ForceGraph(
  *  }>}} graph - an object with nodes and links to search within
  * @returns {Array<string>} - returns an array of strings of the child node ids
  */
-
-const links = miserables.links//acessing links in miserables 
-const nodes = miserables.nodes// acessing nodes in miserables 
-function getChildren(d) {
-  console.log(d)
-  const children = [];
-  links.forEach(link => {
-    if (link.source === d) {
-      children.push(link.target);
-    }
-  }
-  );
-  console.log("end of function");
-  console.log(children);
-  return children;
-}
-
 
 /**
  * Add a set of nodes and their adjacent links to the graph.
@@ -199,8 +220,6 @@ function getChildren(d) {
   console.log(children);
 }*/
 
-
-
 // create graph
 const graph = ForceGraph(miserables, {
   nodeId: (d) => d.id,
@@ -214,3 +233,4 @@ const graph = ForceGraph(miserables, {
 // get container div and attach graph to it
 const container = document.getElementById("container");
 container.append(graph);
+
