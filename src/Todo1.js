@@ -82,15 +82,31 @@ function ForceGraph(
     .attr("fill", (d) => color(d.group))
     .on("click", (_event, target) => {
       const children = getChildren(target);
+      // TODO: see if you can hide nodes from the simulation when they are invisible and vice versa
+      // - Try to rely on id/_id for now
       children.forEach((child) => {
-        // can name whathever i want
         if (child.visible == true) {
           child.visible = false;
-          node.filter((node) => node.index == child.index).remove();
+          // can name whathever i want
+          // _nodes.push(child);
+          // const node = nodes[child.index];
+          // const node = nodes.filter((d) => child.id == d.id)[0]; // I don't know which is better
+
+          // possiblility 1 remove data from node
+          // node = {};
+          // possiblility 2 hide id from simulation
+          child._id = child.id;
+          child.id = null; // or = ""
         } else {
           child.visible = true;
-          //node.filter((node)=>node.index==child.index).join();
+          child.id = child._id;
+          child._id = null; // or = ""
+          // nodes.push(child);
+          // const node = nodes[child.index];
         }
+
+        // node.filter((node) => node.index == child.index).join();
+        // node.filter((node) => node.index == child.index).remove();
       });
       node.data(getVisibleNodes(nodes)).join(
         (enter) =>
@@ -276,3 +292,4 @@ const graph = ForceGraph(miserables, {
 // get container div and attach graph to it
 const container = document.getElementById("container");
 container.append(graph);
+
