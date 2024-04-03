@@ -82,33 +82,34 @@ function ForceGraph(
     .attr("fill", (d) => color(d.group))
     .on("click", (_event, target) => {
       const children = getChildren(target);
-      children.forEach((child)=>{ // can name whathever i want         
-              if (child.visible==true){
-                child.visible=false;
-              //  node.filter((node)=>node.index==child.index).remove();
-              } 
-              else{
-                child.visible=true;
-                //node.filter((node)=>node.index==child.index).join();
-              }
-            }
+      children.forEach((child) => {
+        // can name whathever i want
+        if (child.visible == true) {
+          child.visible = false;
+          node.filter((node) => node.index == child.index).remove();
+        } else {
+          child.visible = true;
+          //node.filter((node)=>node.index==child.index).join();
+        }
+      });
+      node.data(getVisibleNodes(nodes)).join(
+        (enter) =>
+          enter
+            .append("circle")
+            .attr("r", 5)
+            .attr("fill", (d) => color(d.group)),
+        (update) => update,
+        (exit) => exit.remove()
       );
-       node.data(getVisibleNodes(nodes)).join(
-        enter=> enter.append("circle")
-        .attr("r", 5)
-        .attr("fill", (d) => color(d.group)),
-        update=> update,
-        exit=> exit.remove());
-        console.log(node.data());
+      console.log(node.data());
 
       link.data(getVisibleLinks(links)).join(
-        enter=> enter.append("line")
-          .attr("stroke-width", (d) => Math.sqrt(d.value)),
-        update=> update,
-        exit=> exit.remove());
-        console.log(link.data());
-      
-    
+        (enter) =>
+          enter.append("line").attr("stroke-width", (d) => Math.sqrt(d.value)),
+        (update) => update,
+        (exit) => exit.remove()
+      );
+      console.log(link.data());
     });
 
   // TODO: move simulation, node, and links to an update function
@@ -160,15 +161,14 @@ function ForceGraph(
     console.debug(d);
     const children = [];
     getChildrenLinks(d).forEach((link) => {
-      children.push(link.target); // uptaded the array function to show only the id and the visibility     
-
+      children.push(link.target); // uptaded the array function to show only the id and the visibility
     });
     console.info("end of function");
     console.debug(children);
     return children;
   }
 
-  function getChildrenLinks(d){
+  function getChildrenLinks(d) {
     const childLinks = [];
     links.forEach((link) => {
       if (d.id === link.source.id) {
@@ -176,7 +176,7 @@ function ForceGraph(
       }
     });
     console.info("end of function");
-    return childLinks
+    return childLinks;
   }
 
   function getVisibleNodes(nodes) {
@@ -187,9 +187,12 @@ function ForceGraph(
     return links.filter((link) => {
       const source = nodes.filter((node) => node.id == link.source);
       const target = nodes.filter((node) => node.id == link.target);
-      console.log(source)
-      return source.length>0 ? source[0].visible : false && 
-      target.length>0 ? target[0].visible : false;
+      console.log(source);
+      return source.length > 0
+        ? source[0].visible
+        : false && target.length > 0
+        ? target[0].visible
+        : false;
     });
   }
 
