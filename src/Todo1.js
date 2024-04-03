@@ -133,7 +133,7 @@ function ForceGraph(
     const children = [];
     links.forEach((link) => {
       if (d.id === link.source.id) {
-        children.push(link.target);
+        children.push({ id: link.target.id, visible: link.target.visible });
       }
       else{
         return
