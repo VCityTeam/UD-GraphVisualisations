@@ -77,7 +77,7 @@ const miserables = {
       { id: "Child2", group: 10, visible: true },
       { id: "Brujon", group: 4, visible: true },
       { id: "Mme.Hucheloup", group: 8, visible: true },
-      { id: "VictorHugo", group: 28, visible: false }
+      { id: "VictorHugo", group: 28, visible: true }
     ],
     links: [
       { source: "Napoleon", target: "Myriel", value: 1 },

@@ -36,10 +36,10 @@ function ForceGraph(
   // so that re-evaluating this cell produces the same result.
   const links = data.links.map((d) => ({ ...d }));
   const nodes = data.nodes.map((d) => ({ ...d }));
-  console.debug(nodes);
-  console.debug(links);
-  console.debug(getVisibleNodes(nodes));
-  console.debug(getVisibleLinks(links));
+  //console.debug(nodes);
+  //console.debug(links);
+  //console.debug(getVisibleNodes(nodes));
+  //console.debug(getVisibleLinks(links));
   // Create a simulation with several forces.
   const simulation = d3
     .forceSimulation(getVisibleNodes(nodes))
@@ -79,7 +79,7 @@ function ForceGraph(
     .attr("r", 5)
     .attr("fill", (d) => color(d.group))
     .on("click", (_event, target) => {
-      const children = getChildren(target);
+      const childrens = getChildren(target);
       // TODO: for every child, set visible = false
     });
 
@@ -132,8 +132,11 @@ function ForceGraph(
     console.debug(d);
     const children = [];
     links.forEach((link) => {
-      if (link.source === d.id) {
+      if (d.id === link.source.id) {
         children.push(link.target);
+      }
+      else{
+        return
       }
     });
     console.info("end of function");
@@ -233,4 +236,3 @@ const graph = ForceGraph(miserables, {
 // get container div and attach graph to it
 const container = document.getElementById("container");
 container.append(graph);
-
