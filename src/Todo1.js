@@ -35,17 +35,19 @@ function ForceGraph(
   // The force simulation mutates links and nodes, so create a copy
   // so that re-evaluating this cell produces the same result.
   const links = data.links.map((d) => ({ ...d }));
+  const _links = {};
   const nodes = data.nodes.map((d) => ({ ...d }));
+  const _nodes = {};
   //console.debug(nodes);
   //console.debug(links);
   //console.debug(getVisibleNodes(nodes));
   //console.debug(getVisibleLinks(links));
   // Create a simulation with several forces.
   const simulation = d3
-    .forceSimulation(getVisibleNodes(nodes))
+    .forceSimulation(nodes)
     .force(
       "link",
-      d3.forceLink(getVisibleLinks(links)).id((d) => d.id)
+      d3.forceLink(links).id((d) => d.id)
     )
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2))
@@ -65,7 +67,7 @@ function ForceGraph(
     .attr("stroke", "#999")
     .attr("stroke-opacity", 0.6)
     .selectAll()
-    .data(links.filter((link) => link.source.visible && link.target.visible))
+    .data(links)
     .join("line")
     .attr("stroke-width", (d) => Math.sqrt(d.value));
 
@@ -74,13 +76,39 @@ function ForceGraph(
     .attr("stroke", "#fff")
     .attr("stroke-width", 1.5)
     .selectAll()
-    .data(getVisibleNodes(nodes))
+    .data(nodes)
     .join("circle")
     .attr("r", 5)
     .attr("fill", (d) => color(d.group))
     .on("click", (_event, target) => {
-      const childrens = getChildren(target);
-      // TODO: for every child, set visible = false
+      const children = getChildren(target);
+      children.forEach((child)=>{ // can name whathever i want         
+              if (child.visible==true){
+                child.visible=false;
+              //  node.filter((node)=>node.index==child.index).remove();
+              } 
+              else{
+                child.visible=true;
+                //node.filter((node)=>node.index==child.index).join();
+              }
+            }
+      );
+       node.data(getVisibleNodes(nodes)).join(
+        enter=> enter.append("circle")
+        .attr("r", 5)
+        .attr("fill", (d) => color(d.group)),
+        update=> update,
+        exit=> exit.remove());
+        console.log(node.data());
+
+      link.data(getVisibleLinks(links)).join(
+        enter=> enter.append("line")
+          .attr("stroke-width", (d) => Math.sqrt(d.value)),
+        update=> update,
+        exit=> exit.remove());
+        console.log(link.data());
+      
+    
     });
 
   // TODO: move simulation, node, and links to an update function
@@ -131,17 +159,24 @@ function ForceGraph(
   function getChildren(d) {
     console.debug(d);
     const children = [];
-    links.forEach((link) => {
-      if (d.id === link.source.id) {
-        children.push({ id: link.target.id, visible: link.target.visible });
-      }
-      else{
-        return
-      }
+    getChildrenLinks(d).forEach((link) => {
+      children.push(link.target); // uptaded the array function to show only the id and the visibility     
+
     });
     console.info("end of function");
     console.debug(children);
     return children;
+  }
+
+  function getChildrenLinks(d){
+    const childLinks = [];
+    links.forEach((link) => {
+      if (d.id === link.source.id) {
+        childLinks.push(link); // uptaded the array function to show only the id and the visibility
+      }
+    });
+    console.info("end of function");
+    return childLinks
   }
 
   function getVisibleNodes(nodes) {
@@ -152,7 +187,9 @@ function ForceGraph(
     return links.filter((link) => {
       const source = nodes.filter((node) => node.id == link.source);
       const target = nodes.filter((node) => node.id == link.target);
-      return source[0].visible && target[0].visible;
+      console.log(source)
+      return source.length>0 ? source[0].visible : false && 
+      target.length>0 ? target[0].visible : false;
     });
   }
 
