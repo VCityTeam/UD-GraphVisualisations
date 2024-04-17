@@ -1,3 +1,10 @@
+// TODO: move simulation, node, and links to an update function
+// node.enter() should include code for drawing new nodes https://d3js.org/d3-selection/joining#selection_enter
+// node.merge() or .join() is maybe necessary as well https://d3js.org/d3-selection/joining#selection_join ; https://d3js.org/d3-selection/joining#selection_join
+// node.exit() should include .remove() https://d3js.org/d3-selection/joining#selection_exit
+// look at example https://observablehq.com/@d3/collapsible-tree for how this is done with trees
+
+
 import * as d3 from "d3";
 
 // Copyright 2021-2023 Observable, Inc.
@@ -81,34 +88,28 @@ function ForceGraph(
     .attr("r", 5)
     .attr("fill", (d) => color(d.group))
     .on("click", (_event, target) => {
+      console.log(target);
       const children = getChildren(target);
+      const childrenlinks = getChildrenLinks(target);
       // TODO: see if you can hide nodes from the simulation when they are invisible and vice versa
       // - Try to rely on id/_id for now
       children.forEach((child) => { // can name whathever i want
-        if (child.visible == true) {
-          child.visible = false;
-          // _nodes.push(child);
-          // const node = nodes[child.index];
-          // const node = nodes.filter((d) => child.id == d.id)[0]; // I don't know which is better
-
-          // possiblility 1 remove data from node
-          // node = {};
-          // possiblility 2 hide id from simulation
-          // child._id = child.id;
-          // child.id = null; // or = ""
-        } else {
-          child.visible = true;
-          // child.id = child._id;
-          // child._id = null; // or = ""
-          // nodes.push(child);
-          // const node = nodes[child.index];
-        }
 
         // node.filter((node) => node.index == child.index).join();
         // node.filter((node) => node.index == child.index).remove();
-        //console.log(node)
-        console.log(child.id);
+        console.log(child);
       });
+      console.log(nodes);
+
+      childrenlinks.forEach((link) => { // can name whathever i want
+
+
+        // node.filter((node) => node.index == child.index).join();
+        // node.filter((node) => node.index == child.index).remove();
+        console.log(link);
+      });
+
+
       node.data(getVisibleNodes(nodes)).join(
         (enter) =>
           enter
@@ -120,20 +121,21 @@ function ForceGraph(
       );
       //console.log(node.data());
 
-      // link.data(getVisibleLinks(links)).join(
-      //   (enter) =>
-      //     enter.append("line").attr("stroke-width", (d) => Math.sqrt(d.value)),
-      //   (update) => update,
-      //   (exit) => exit.remove()
-      // );
-    //  console.log(link.data());
-    });
+      link.data(getVisibleLinks(links)).join(
+        (enter) =>
+          enter.append("line").attr("stroke-width", (d) => Math.sqrt(d.value)),
+        (update) => update,
+        (exit) => exit.remove()
+      );
+      console.log(link.data());
 
-  // TODO: move simulation, node, and links to an update function
-  // node.enter() should include code for drawing new nodes https://d3js.org/d3-selection/joining#selection_enter
-  // node.merge() or .join() is maybe necessary as well https://d3js.org/d3-selection/joining#selection_join ; https://d3js.org/d3-selection/joining#selection_join
-  // node.exit() should include .remove() https://d3js.org/d3-selection/joining#selection_exit
-  // look at example https://observablehq.com/@d3/collapsible-tree for how this is done with trees
+      simulation.force(
+        "link",
+        d3.forceLink(links).id((d) => d.id) //here the nodes get named
+      );
+    });
+  console.log(nodes);
+
 
   node.append("title").text((d) => d.id);
 
@@ -174,6 +176,21 @@ function ForceGraph(
     event.subject.fy = null;
   }
 
+
+  /**
+ * Get the child nodes of a node in a graph.
+ * @param {string} id - the id of the node
+ * @param {{
+ *  nodes: Array<{
+  *    id: string,
+  *    group: number }>,
+  *  links: Array<{
+  *    source: string,
+  *    target: string,
+  *    value: number
+  *  }>}} graph - an object with nodes and links to search within
+  * @returns {Array<string>} - returns an array of strings of the child node ids
+  */
   function getChildren(d) {
     //console.debug(d);
     const children = [];
@@ -185,10 +202,23 @@ function ForceGraph(
     return children;
   }
 
+
+  /**
+ * Add a set of nodes and their adjacent links to the graph.
+ * @param {
+ *  nodes: Array<{
+  *    id: string,
+  *    group: number }>,
+  *  links: Array<{
+  *    source: string,
+  *    target: string,
+  *    value: number
+  *  }>} graph - an object with nodes and links to add to the d3 graph
+  */
   function getChildrenLinks(d) {
     const childLinks = [];
     links.forEach((link) => {
-      if (d.id === link.source.id) {
+      if (d.id === link.source.id || d._id === link.source.id) {
         childLinks.push(link); // uptaded the array function to show only the id and the visibility
       }
     });
@@ -200,81 +230,26 @@ function ForceGraph(
     return nodes.filter((d) => d.visible); //here we create an new array again 
   }
 
-  // function getVisibleLinks(links) {
-  //   return links.filter((link) => {
-  //     const source = nodes.filter((node) => node.id == link.source);
-  //     const target = nodes.filter((node) => node.id == link.target);
-  //  //   console.log(source);
-  //     return (source.length > 0 ? source[0].visible : false) && (target.length > 0 ? target[0].visible : false);
-  //   });
-  // }
+  function getVisibleLinks(links) {
+    return links.filter((link) => {
+      const source = nodes.filter((node) => node.id == link.source);
+      const target = nodes.filter((node) => node.id == link.target);
+      //   console.log(source);
+      return (source.length > 0 ? source[0].visible : false) && (target.length > 0 ? target[0].visible : false);
+    });
+  }
 
   // TODO: call update here
 
   return svg.node();
 }
 
-//erased the comment part of readfile
 
-/**
- * Get the child nodes of a node in a graph.
- * @param {string} id - the id of the node
- * @param {{
- *  nodes: Array<{
- *    id: string,
- *    group: number }>,
- *  links: Array<{
- *    source: string,
- *    target: string,
- *    value: number
- *  }>}} graph - an object with nodes and links to search within
- * @returns {Array<string>} - returns an array of strings of the child node ids
- */
 
-/**
- * Add a set of nodes and their adjacent links to the graph.
- * @param {
- *  nodes: Array<{
- *    id: string,
- *    group: number }>,
- *  links: Array<{
- *    source: string,
- *    target: string,
- *    value: number
- *  }>} graph - an object with nodes and links to add to the d3 graph
- */
-// function addNodes(graph) {
-//   console.log("called addNodes");
-//   const node = this.svg.on("click", (event, datum) => {
-//     this.dispatchEvent({
-//       type: "click",
-//       event: (target = none),
-//       datum: datum,
-//     });
-//   });
-// }
 
-/**
- * Add a set of nodes and their adjacent links to the graph.
- * @param {
- *  nodes: Array<string}>,
- *  links: Array<string>} graph - an object with ids of nodes and links to remove from the d3 graph
- */
-// function removeNodes(graph) {
-//   console.log("called removeNodes");
-//   // implement me!
-// }
 
-/*
-  @param {Event} event - click event
-  @param {object} datum - node data 
-*/
-/*function nodeClicked(event, datum) {
-  console.log(event);
-  console.log(datum);
-  const children = getChildren(datum.id, miserables);
-  console.log(children);
-}*/
+
+
 
 // create graph
 const graph = ForceGraph(miserables, {
