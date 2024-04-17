@@ -34,10 +34,10 @@ function ForceGraph(
 
   // The force simulation mutates links and nodes, so create a copy
   // so that re-evaluating this cell produces the same result.
-  const links = data.links.map((d) => ({ ...d }));
-  const _links = {};
-  const nodes = data.nodes.map((d) => ({ ...d }));
-  const _nodes = {};
+  const links = data.links.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
+  const _links = {}; // we will use when the id gets set off
+  const nodes = data.nodes.map((d) => ({ ...d }));//Create an array with name nodes(this array contais every node)
+  const _nodes = {}; // we will use when the id gets sets off
   //console.debug(nodes);
   //console.debug(links);
   //console.debug(getVisibleNodes(nodes));
@@ -47,10 +47,10 @@ function ForceGraph(
     .forceSimulation(nodes)
     .force(
       "link",
-      d3.forceLink(links).id((d) => d.id)
+      d3.forceLink(links).id((d) => d.id) //here the nodes get named
     )
     .force("charge", d3.forceManyBody())
-    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("center", d3.forceCenter(width / 3, height / 3)) // here made all the nodes stay in the same position
     .on("tick", ticked);
 
   // Create the SVG container.
@@ -84,10 +84,9 @@ function ForceGraph(
       const children = getChildren(target);
       // TODO: see if you can hide nodes from the simulation when they are invisible and vice versa
       // - Try to rely on id/_id for now
-      children.forEach((child) => {
+      children.forEach((child) => { // can name whathever i want
         if (child.visible == true) {
           child.visible = false;
-          // can name whathever i want
           // _nodes.push(child);
           // const node = nodes[child.index];
           // const node = nodes.filter((d) => child.id == d.id)[0]; // I don't know which is better
@@ -95,18 +94,20 @@ function ForceGraph(
           // possiblility 1 remove data from node
           // node = {};
           // possiblility 2 hide id from simulation
-          child._id = child.id;
-          child.id = null; // or = ""
+          // child._id = child.id;
+          // child.id = null; // or = ""
         } else {
           child.visible = true;
-          child.id = child._id;
-          child._id = null; // or = ""
+          // child.id = child._id;
+          // child._id = null; // or = ""
           // nodes.push(child);
           // const node = nodes[child.index];
         }
 
         // node.filter((node) => node.index == child.index).join();
         // node.filter((node) => node.index == child.index).remove();
+        //console.log(node)
+        console.log(child.id);
       });
       node.data(getVisibleNodes(nodes)).join(
         (enter) =>
@@ -117,15 +118,15 @@ function ForceGraph(
         (update) => update,
         (exit) => exit.remove()
       );
-      console.log(node.data());
+      //console.log(node.data());
 
-      link.data(getVisibleLinks(links)).join(
-        (enter) =>
-          enter.append("line").attr("stroke-width", (d) => Math.sqrt(d.value)),
-        (update) => update,
-        (exit) => exit.remove()
-      );
-      console.log(link.data());
+      // link.data(getVisibleLinks(links)).join(
+      //   (enter) =>
+      //     enter.append("line").attr("stroke-width", (d) => Math.sqrt(d.value)),
+      //   (update) => update,
+      //   (exit) => exit.remove()
+      // );
+    //  console.log(link.data());
     });
 
   // TODO: move simulation, node, and links to an update function
@@ -174,13 +175,13 @@ function ForceGraph(
   }
 
   function getChildren(d) {
-    console.debug(d);
+    //console.debug(d);
     const children = [];
     getChildrenLinks(d).forEach((link) => {
       children.push(link.target); // uptaded the array function to show only the id and the visibility
     });
-    console.info("end of function");
-    console.debug(children);
+    // console.info("end of function");
+    // console.debug(children);
     return children;
   }
 
@@ -191,26 +192,22 @@ function ForceGraph(
         childLinks.push(link); // uptaded the array function to show only the id and the visibility
       }
     });
-    console.info("end of function");
+    // console.info("end of function");
     return childLinks;
   }
 
   function getVisibleNodes(nodes) {
-    return nodes.filter((d) => d.visible);
+    return nodes.filter((d) => d.visible); //here we create an new array again 
   }
 
-  function getVisibleLinks(links) {
-    return links.filter((link) => {
-      const source = nodes.filter((node) => node.id == link.source);
-      const target = nodes.filter((node) => node.id == link.target);
-      console.log(source);
-      return source.length > 0
-        ? source[0].visible
-        : false && target.length > 0
-        ? target[0].visible
-        : false;
-    });
-  }
+  // function getVisibleLinks(links) {
+  //   return links.filter((link) => {
+  //     const source = nodes.filter((node) => node.id == link.source);
+  //     const target = nodes.filter((node) => node.id == link.target);
+  //  //   console.log(source);
+  //     return (source.length > 0 ? source[0].visible : false) && (target.length > 0 ? target[0].visible : false);
+  //   });
+  // }
 
   // TODO: call update here
 
