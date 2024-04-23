@@ -41,10 +41,21 @@ function ForceGraph(
 
   // The force simulation mutates links and nodes, so create a copy
   // so that re-evaluating this cell produces the same result.
-  const links = data.links.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
-  const _links = data._links.map((d) => ({ ...d })); // we will use when the id gets set off
-  const nodes = data.nodes.map((d) => ({ ...d }));//Create an array with name nodes(this array contais every node)
-  const _nodes = data._nodes.map((d) => ({ ...d })); // we will use when the id gets sets off
+
+  let links;
+  let _links;
+  let nodes;
+  let _nodes;
+
+  if (data.links && data.nodes && data._links && data._nodes) {
+    links = data.links.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
+    _links = data._links.map((d) => ({ ...d })); // we will use when the id gets set off
+    nodes = data.nodes.map((d) => ({ ...d }));//Create an array with name nodes(this array contais every node)
+    _nodes = data._nodes.map((d) => ({ ...d })); // we will use when the id gets sets off
+  }
+  else {
+    return
+  }
   //console.debug(nodes);
   //console.debug(links);
   //console.debug(getVisibleNodes(nodes));
