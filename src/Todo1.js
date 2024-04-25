@@ -42,19 +42,26 @@ function ForceGraph(
   // The force simulation mutates links and nodes, so create a copy
   // so that re-evaluating this cell produces the same result.
 
-  let links;
-  let _links;
-  let nodes;
-  let _nodes;
+  let links = [];
+  let _links = [];
+  let nodes = [];
+  let _nodes = [];
 
-  if (data.links && data.nodes && data._links && data._nodes) {
+
+  if (data.links) {
     links = data.links.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
-    _links = data._links.map((d) => ({ ...d })); // we will use when the id gets set off
-    nodes = data.nodes.map((d) => ({ ...d }));//Create an array with name nodes(this array contais every node)
-    _nodes = data._nodes.map((d) => ({ ...d })); // we will use when the id gets sets off
   }
-  else {
-    return
+
+  if (data._links) {
+    _links = data._links.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
+  }
+
+  if (data.nodes) {
+    nodes = data.nodes.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
+  }
+
+  if (data._nodes) {
+    _nodes = data._nodes.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
   }
   //console.debug(nodes);
   //console.debug(links);
@@ -98,10 +105,16 @@ function ForceGraph(
     .join("circle")
     .attr("r", 5)
     .attr("fill", (d) => color(d.group))
-  // .on("click", (_event, target) => {
-  //   console.log(target);
-  //   const children = getChildren(target);
-  //   const childrenlinks = getChildrenLinks(target);
+    // .on("click", (_event, target) => {
+    //   console.log(target);
+    //   const children = GetVisibleChildren(target);
+    //   const _children = GetInvisibleChildren(target);
+
+
+    //   simulation.force("link", d3.forceLink(links).id((d) => d.id)))
+  // const childrenlinks = getChildrenLinks(target);
+
+
   //   // TODO: see if you can hide nodes from the simulation when they are invisible and vice versa
   //   // - Try to rely on id/_id for now
   //   children.forEach((child) => { // can name whathever i want
@@ -244,32 +257,76 @@ function ForceGraph(
 
   // TODO: call update here
 
+  // console.log("Links", links);
+  // console.log("_Links", _links);
+  // console.log("Links[0]", links[0].source.id);
+  // console.log("_Links[0]", _links[0].source);
+
+
   function GetVisibleLinks(data) {
-    return links.filter((link) => link.source.id === data); // Return an array that contains every link.source where the name it's equal at thee input
+    return links.filter((link) => {
+      if (typeof link.source == 'string') {
+        return link.source === data
+      }
+      else {
+        return link.source.id === data
+      }
+    }); // Return an array that contains every link.source where the name it's equal at thee input
   }
 
   function GetInvisibleLinks(data) {
     return _links
-      .filter((link) => link.source === data); //Return an array that contains every _link.source where the name it's equal the data 
+      .filter((link) => { //cheking if the data was touched or not (we use that in the other codes)
+        if (typeof link.source == 'string') {
+          return link.source === data
+        }
+        else {
+          return link.source.id === data
+        }
+      }); //Return an array that contains every _link.source where the name it's equal the data 
   }
 
   function GetVisibleChildren(data) {
-    return links
-      .filter((link) => link.source.id === data) //Create an array where the link.source it's equal of the data
+    return GetVisibleLinks(data)
       .map((link) => nodes.find((node) => node.id === link.target.id))// Here in each link we are appling an map function that stands for every link we find an node which that id it's equal of the link target)      
   }
 
   function GetInvisibleChildren(data) {
-    return _links // will return the invisible links 
-      .filter((link) => link.source === data) // same thing as the other one, create an array that contains every link.source that it's equal of the data
+    return GetInvisibleLinks(data)
       .map((link) => _nodes.find((node) => node.id === link.target)); // First we made an functoin in the link where we made an filter in the invisible nodes where the node.id it's equal of the link target
   }
+
+  function RemoveNodes(nodesToRemove, nodesDataset) {
+    let list=[]; //here whe make an list of indexes
+    nodesToRemove.forEach(node => {
+      let index;
+      if (typeof node.index === "undefined") { //get the index
+        index = nodesToRemove.findIndex(element => element.id === nodesDataset.id);
+        list.push(index);
+      } 
+      else {
+        index= node.index;
+        list.push(index);
+      }
+    });
+    console.log("list", list);
+    let i=0;
+    let k
+    for (let interactions = 0; interactions < list.length; interactions++) {
+      k = nodesDataset.splice(list[i], 1);
+      console.log("Dentro do for", k);
+    }
+  }
+  // console.log("NodeNames", nodes)
   // testing functions
 
-  console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
-  console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
-  console.log("GetVisibleLinks():", GetVisibleLinks("Gervais"));
-  console.log("GetInvisibleLinks( B ):", GetInvisibleLinks("Blanck"));
+  // console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
+  // console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
+  // console.log("GetVisibleLinks():", GetVisibleLinks("Gervais"));
+  // console.log("GetInvisibleLinks( B ):", GetInvisibleLinks("Blanck"));
+  console.log("_nodes before", _nodes);
+  console.log("Testing remove", RemoveNodes(_nodes, _nodes));
+  console.log("_nodes after", _nodes);
 
   return svg.node();
 }

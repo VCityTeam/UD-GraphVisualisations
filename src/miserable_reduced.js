@@ -19,6 +19,7 @@ const miserables = {
         { id: 'Blanck', group: 4 },
         { id: 'C', group: 4 },
         { id: 'D', group: 4 },
+        { id: 'F', group: 4 },
       ],
     _links:  [
         { source: 'Blanck', target: 'C' },
