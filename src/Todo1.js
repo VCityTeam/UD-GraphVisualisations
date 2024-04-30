@@ -46,6 +46,7 @@ function ForceGraph(
   let _links = [];
   let nodes = [];
   let _nodes = [];
+  let testingnodes= []
 
 
   if (data.links) {
@@ -63,6 +64,12 @@ function ForceGraph(
   if (data._nodes) {
     _nodes = data._nodes.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
   }
+
+  console.log(data.testingnodes);
+  if (data.testingnodes) {
+    testingnodes = data.testingnodes.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
+  }
+
   //console.debug(nodes);
   //console.debug(links);
   //console.debug(getVisibleNodes(nodes));
@@ -105,13 +112,13 @@ function ForceGraph(
     .join("circle")
     .attr("r", 5)
     .attr("fill", (d) => color(d.group))
-    // .on("click", (_event, target) => {
-    //   console.log(target);
-    //   const children = GetVisibleChildren(target);
-    //   const _children = GetInvisibleChildren(target);
+  // .on("click", (_event, target) => {
+  //   console.log(target);
+  //   const children = GetVisibleChildren(target);
+  //   const _children = GetInvisibleChildren(target);
 
 
-    //   simulation.force("link", d3.forceLink(links).id((d) => d.id)))
+  //   simulation.force("link", d3.forceLink(links).id((d) => d.id)))
   // const childrenlinks = getChildrenLinks(target);
 
 
@@ -297,38 +304,96 @@ function ForceGraph(
   }
 
   function RemoveNodes(nodesToRemove, nodesDataset) {
-    let list=[]; //here whe make an list of indexes
-    nodesToRemove.forEach(node => {
-      let index;
-      if (typeof node.index === "undefined") { //get the index
-        index = nodesToRemove.findIndex(element => element.id === nodesDataset.id);
-        list.push(index);
-      } 
-      else {
-        index= node.index;
-        list.push(index);
+    let noderemovecopy = nodesToRemove.slice(); // Creating an copy to maninpulate the data 
+    noderemovecopy.forEach(node => {
+      console.log("Dataset 0:", nodesDataset[0]);
+      console.log("Node.id", node.id);
+      
+      let index=-1;//Defining the first value of index
+      let i=0;
+      while (i<nodesDataset.length && index==-1) {
+        if (nodesDataset[i].id===node.id) {
+          index= i;
+        }
+        i++;
       }
-    });
-    console.log("list", list);
-    let i=0;
-    let k
-    for (let interactions = 0; interactions < list.length; interactions++) {
-      k = nodesDataset.splice(list[i], 1);
-      console.log("Dentro do for", k);
-    }
+      while(index >= 0){
+        nodesDataset.splice(index, 1);
+        index = -1;
+        i=0;
+        while (i<nodesDataset.length && index==-1) { //achar a nova primeira posição
+          if (nodesDataset[i].id===node.id) {
+            index= i;
+          }
+          i++;
+        }
+      }
+      
+    })
   }
-  // console.log("NodeNames", nodes)
-  // testing functions
+//     // let list = []; //here whe make an list of indexes
+//     console.log("NodestoRemove", nodesToRemove);
+//     console.log("NodesDataSete", nodesDataset);
+//     nodesToRemove.forEach(node => {
+//       let index;
+//       if (typeof node.index === "undefined") { //get the index
+//         index = nodesToRemove.findIndex(element => element.id === nodesDataset.id);
+//         // list.push(index);
+//       
+//       } 
+//       else {
+//         index= node.index;
+//         // list.push(index);
+//         
+//       }
+//     });
+//   //   nodesToRemove.forEach(node =>
+//   //     let  index;
+//   //     if (typeof node.index === "undefined") { //get the index
+//   //       index = nodesToRemove.findIndex(
+//   //           for (let i = 0; i < nodesDataset.length; i++) {
+//   //         nodesToRemove => nodesToRemove[i].id === nodesDataset.id;
+//   //         list.push(index);
+//   //       }
+//   //       );
+//   //       console.log("Dentro do if agr com index", index)
+//   //     }
+  
+//   //     else {
+//   //       index = node.index;
+//   //       list.push(index);
+//   //       console.log("Dentro do else", node.index)
+//   // }
+//   //   );
+//   console.log("list", list);
 
-  // console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
-  // console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
-  // console.log("GetVisibleLinks():", GetVisibleLinks("Gervais"));
-  // console.log("GetInvisibleLinks( B ):", GetInvisibleLinks("Blanck"));
-  console.log("_nodes before", _nodes);
-  console.log("Testing remove", RemoveNodes(_nodes, _nodes));
-  console.log("_nodes after", _nodes);
+//   // for (let i = list.length - 1; i >= 0; i--) {
+//   //   if (list[i] <nodesDataset.length) {
+//   //       list.splice(i, 1);
+//   //   }
+//   // }
 
-  return svg.node();
+
+// // funciona!!
+//     // let i=0;
+//     // let k
+//     // for (let interactions = 0; interactions < list.length; interactions++) {
+//     //   k = nodesDataset.splice(list[i], 1);
+//     //   console.log("Dentro do for", k);
+//     // }
+  
+// console.log("NodeNames", nodes)
+// testing functions
+
+// console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
+// console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
+// console.log("GetVisibleLinks():", GetVisibleLinks("Gervais"));
+// console.log("GetInvisibleLinks( B ):", GetInvisibleLinks("Blanck"));
+console.log("nodes before", nodes);
+console.log("Testing remove", RemoveNodes(nodes, nodes));
+console.log("nodes after", nodes);
+
+return svg.node();
 }
 
 
