@@ -5,12 +5,8 @@ const miserables = {
         { id: "Mme.deR", group: 2 },
         { id: "Gervais", group: 2 },
         { id: "VictorHugo", group: 28 },
-        { id: 'Blanck', group: 4 },
-        { id: 'C', group: 4 },
+
         // { id: null, group: 35 }
-    ],
-    testingnodes: [
-        { id: "OldMan", group: 1 },
     ],
     links: [
         { source: "Mme.deR", target: "Valjean", value: 1 },
@@ -18,7 +14,7 @@ const miserables = {
         { source: "VictorHugo", target: "OldMan", value: 1 },
         { source: "VictorHugo", target: "Mme.deR", value: 1 },
         { source: "VictorHugo", target: "Gervais", value: 1 },
-
+        
     ],
     _nodes:  [
         { id: 'Blanck', group: 4 },
