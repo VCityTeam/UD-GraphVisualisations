@@ -327,33 +327,68 @@ function ForceGraph(
     })
   }
 
-function PassingArguments(data){
-  console.log("Parametros passados: ", data);
-  let children= GetVisibleChildren(data);
-  console.log("Children", children);
-  _nodes.push(...children); //adding every attribute that children has
-  console.log("Como fica _nodes: ", _nodes);
-  RemoveNodes(children, nodes);
-  console.log("Como fica nodes: ", nodes);
-  console.log("como fica_nodes", _nodes);
-  // children.id.forEach(childrenid=> {
-  //   console.log("Dentro do foreach");
-  //   childrenid.push(_nodes);   
-  // });
-  // RemoveNodes(children, nodes);
-  // console.log("End of PassingArguments", nodes);
-}
+  function RemoveLinks(linksToRemove, linksDataset){
+    let linkremovecopy = linksToRemove.slice(); // Creating an copy to maninpulate the data 
+    console.log("linkstoRemove: ", linksToRemove);
+    console.log("linksDataset: ", linksDataset);
+    linkremovecopy.forEach(target => {
+      // console.log("Dataset 0:", nodesDataset[0]);
+      console.log("target", target);
+      let index=-1;//Defining the first value of index
+      let i=0;
+
+      while (i<linksDataset.length && index==-1) {
+        if (linksDataset[i].id===target) {
+          index= i;
+        }
+        console.log("linkdsDataset[i]: ", linksDataset[i]);
+        i++;
+      }
+
+      while(index >= 0){
+        linksDataset.splice(index, 1);
+        index = -1;
+        i=0;
+        while (i<linksDataset.length && index==-1) { //find the new first position
+          if (linksDataset[i].id===target.id) {
+            index= i;
+          }
+          i++;
+        }
+      }
+
+    })
+     
+  }
+
+  function PassingArgumentsVn(data){ //making the visible invisible
+    let children= GetVisibleChildren(data);
+    _nodes.push(...children); //adding every attribute that children has
+    RemoveNodes(children, nodes);
+    console.log("End of PassingArgumentsVn", nodes);
+  }
+
+  function PassingArgumentsIn(data){ //making the invisible visible 
+    let _children= GetInvisibleChildren(data);
+    nodes.push(..._children); //adding every attribute that children has
+    RemoveNodes(_children, _nodes);
+    console.log("End of PassingArgumentsIn", _nodes);
+  }
 // testing functions
 
-console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
-console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
-console.log("GetVisibleLinks():", GetVisibleLinks("Gervais"));
-console.log("GetInvisibleLinks( B ):", GetInvisibleLinks("Blanck"));
+// console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
+// console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
+// console.log("links", links.length);
+console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks("VictorHugo"));
+// console.log("GetInvisibleLinks( B ):", GetInvisibleLinks("Blanck"));
 // console.log("nodes before", nodes);
 // console.log("Testing remove", RemoveNodes(nodes, nodes));
+// console.log("Testing remove links", RemoveLinks(GetVisibleLinks("VictorHugo"), links))
+console.log("links", links)
+console.log("Testing remove links", RemoveLinks(_links, links))
 // console.log("nodes after", nodes);
-console.log("Vamos testar o passingarguments");
-console.log("VisibleChildren: \n", PassingArguments("VictorHugo"));
+// console.log("Vamos testar o passingarguments");
+// console.log("VisibleChildren: \n", PassingArguments("VictorHugo"));
 // console.log("InvisibleChildren: \n", PassingArguments("Blanck"));
 return svg.node();
 }
