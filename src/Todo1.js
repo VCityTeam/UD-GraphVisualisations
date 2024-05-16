@@ -107,10 +107,16 @@ function ForceGraph(
     .join("circle")
     .attr("r", 5)
     .attr("fill", (d) => color(d.group))
-  // .on("click", (_event, target) => {
-  //   console.log(target);
-  //   const children = GetVisibleChildren(target);
-  //   const _children = GetInvisibleChildren(target);
+  .on("click", (_event, target) => {
+    console.log(target);
+    const children = GetVisibleChildren(target.id);
+    const _children = GetInvisibleChildren(target.id);
+    if (_children.length!=0) {
+      MakeChildrenVisible(target.id);
+    }
+    else{
+      MakeChildrenInvisible(target.id);
+    }
 
 
   //   simulation.force("link", d3.forceLink(links).id((d) => d.id)))
@@ -159,7 +165,7 @@ function ForceGraph(
   //     "link",
   //     d3.forceLink(links).id((d) => d.id) //here the nodes get named
   //   );
-  // });
+  });
   // console.log(nodes);
 
 
@@ -336,21 +342,36 @@ function ForceGraph(
       console.log("target", target);
       let index=-1;//Defining the first value of index
       let i=0;
+      console.log("linksDataset.length:", linksDataset.length)
 
       while (i<linksDataset.length && index==-1) {
-        if (linksDataset[i].id===target) {
+        // console.log("Vendo como checar detro do link")
+        // console.log("\n linkdDataset[i].target.id", linksDataset[i].target.id)// accessing the name of each link name (this way it's used to access data that was alredy modified)
+        // // console.log("\n target.target.id", target.target.id)// accesing the nid of each target (this way is used to access that already modified)
+        // console.log("\n \n target.target", target.target);// accessing data that was not modified
+        // console.log("\n \n target.source", target.source);// accessing data that wasn't modified
+        // console.log("\n linkdDataset[i].target.id", linksDataset[i].target.id); //accssing data that was not modified
+        // console.log("\n linkdDataset[i].source.id", linksDataset[i].source.id)//accessing data that was not modified
+        if (((linksDataset[i].target.id===target.target.id) && (linksDataset[i].source.id===target.source.id)) || ((linksDataset[i].target.id===target.target) && (linksDataset[i].source.id===target.source))) { //with that if we cover that data that was manipulated and the one that was'nt
           index= i;
+          console.log("Dentro do if, valor do i", i)
         }
-        console.log("linkdsDataset[i]: ", linksDataset[i]);
+        // console.log("linkdsDataset[i]: ", linksDataset[i]);
+        // console.log("target: ", target);
+        console.log("index: ", index)
         i++;
       }
 
+      console.log("estamos antes do segundo while")
       while(index >= 0){
+        console.log("\n \n DENTRO MEU PARCEIRO")
         linksDataset.splice(index, 1);
+        console.log("Estamos logo depois do splice")
+        console.log("Dataset ", linksDataset)
         index = -1;
         i=0;
         while (i<linksDataset.length && index==-1) { //find the new first position
-          if (linksDataset[i].id===target.id) {
+          if (((linksDataset[i].target.id===target.target.id) && (linksDataset[i].source.id===target.source.id)) || ((linksDataset[i].target.id===target.target) && (linksDataset[i].source.id===target.source))) {
             index= i;
           }
           i++;
@@ -361,31 +382,33 @@ function ForceGraph(
      
   }
 
-  function PassingArgumentsVn(data){ //making the visible invisible
+  function MakeChildrenInvisible(data){ //making the visible invisible
     let children= GetVisibleChildren(data);
     _nodes.push(...children); //adding every attribute that children has
     RemoveNodes(children, nodes);
-    console.log("End of PassingArgumentsVn", nodes);
+    console.log("End of MakeChildrenInvisible", nodes);
   }
 
-  function PassingArgumentsIn(data){ //making the invisible visible 
+  function MakeChildrenVisible(data){ //making the invisible visible 
     let _children= GetInvisibleChildren(data);
     nodes.push(..._children); //adding every attribute that children has
     RemoveNodes(_children, _nodes);
-    console.log("End of PassingArgumentsIn", _nodes);
+    console.log("End of MakeChildrenVisible", _nodes);
   }
 // testing functions
 
 // console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
 // console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
-// console.log("links", links.length);
-console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks("VictorHugo"));
+// console.log("links \n _links", links, _links);
+// console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks("VictorHugo"));
+// console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks({id: "VictorHugo"}));
 // console.log("GetInvisibleLinks( B ):", GetInvisibleLinks("Blanck"));
 // console.log("nodes before", nodes);
 // console.log("Testing remove", RemoveNodes(nodes, nodes));
-// console.log("Testing remove links", RemoveLinks(GetVisibleLinks("VictorHugo"), links))
-console.log("links", links)
-console.log("Testing remove links", RemoveLinks(_links, links))
+// console.log("Testing remove links", RemoveLinks(_links, links));
+// console.log("Dataset after removelinks", links)
+// console.log("nodes", nodes)
+// console.log("Testing remove links", RemoveNodes(nodes.slice(0, 2), nodes))
 // console.log("nodes after", nodes);
 // console.log("Vamos testar o passingarguments");
 // console.log("VisibleChildren: \n", PassingArguments("VictorHugo"));
