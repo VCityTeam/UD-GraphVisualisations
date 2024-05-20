@@ -335,16 +335,17 @@ function ForceGraph(
 
   function RemoveLinks(linksToRemove, linksDataset){
     let linkremovecopy = linksToRemove.slice(); // Creating an copy to maninpulate the data 
-    console.log("linkstoRemove: ", linksToRemove);
-    console.log("linksDataset: ", linksDataset);
+    console.debug("linkstoRemove: ", linksToRemove);
+    console.debug("linksDataset: ", linksDataset);
     linkremovecopy.forEach(target => {
-      // console.log("Dataset 0:", nodesDataset[0]);
-      console.log("target", target);
+      console.debug("Dataset 0:", linksDataset[0]);
+      console.debug("target", target);
       let index=-1;//Defining the first value of index
       let i=0;
-      console.log("linksDataset.length:", linksDataset.length)
+      console.debug("linksDataset.length:", linksDataset.length)
 
       while (i<linksDataset.length && index==-1) {
+        console.debug("Aqui estamos dentro do while para pegar o primeiro valor do index")
         // console.log("Vendo como checar detro do link")
         // console.log("\n linkdDataset[i].target.id", linksDataset[i].target.id)// accessing the name of each link name (this way it's used to access data that was alredy modified)
         // // console.log("\n target.target.id", target.target.id)// accesing the nid of each target (this way is used to access that already modified)
@@ -354,25 +355,26 @@ function ForceGraph(
         // console.log("\n linkdDataset[i].source.id", linksDataset[i].source.id)//accessing data that was not modified
         if (((linksDataset[i].target.id===target.target.id) && (linksDataset[i].source.id===target.source.id)) || ((linksDataset[i].target.id===target.target) && (linksDataset[i].source.id===target.source))) { //with that if we cover that data that was manipulated and the one that was'nt
           index= i;
-          console.log("Dentro do if, valor do i", i)
         }
-        // console.log("linkdsDataset[i]: ", linksDataset[i]);
-        // console.log("target: ", target);
-        console.log("index: ", index)
+        console.debug("linkdsDataset[i]: ", linksDataset[i]);
+        console.debug("target: ", target);
+        console.debug("index: ", index)
         i++;
       }
 
-      console.log("estamos antes do segundo while")
       while(index >= 0){
-        console.log("\n \n DENTRO MEU PARCEIRO")
-        linksDataset.splice(index, 1);
-        console.log("Estamos logo depois do splice")
-        console.log("Dataset ", linksDataset)
         index = -1;
         i=0;
         while (i<linksDataset.length && index==-1) { //find the new first position
           if (((linksDataset[i].target.id===target.target.id) && (linksDataset[i].source.id===target.source.id)) || ((linksDataset[i].target.id===target.target) && (linksDataset[i].source.id===target.source))) {
+            // console.debug("Dentro do if \n \n" )
+            // console.debug("id do Source", target.source)
+            // console.debug("id do target", target.target)
+            // console.debug("Source base", linksDataset[i].source)
+            // console.debug("Target base", linksDataset[i].target)
             index= i;
+            linksDataset.splice(index, 1);// deleting only the element of the index
+            console.debug("Dataset0", linksDataset[0])
           }
           i++;
         }
@@ -391,28 +393,51 @@ function ForceGraph(
 
   function MakeChildrenVisible(data){ //making the invisible visible 
     let _children= GetInvisibleChildren(data);
-    nodes.push(..._children); //adding every attribute that children has
-    RemoveNodes(_children, _nodes);
+    console.log("nodes ", nodes);
+    console.log("_children", _children)
+    nodes.push(..._children);
+    console.log("nodes", nodes) //adding every attribute that children has
+    // RemoveNodes(_children, _nodes);
     console.log("End of MakeChildrenVisible", _nodes);
   }
+
+
+  function MakeLinksVisible(data){ //we call an invisible link and make it visible
+    console.log("calling getinvisiblelinks")
+    let _childrenlinks = GetInvisibleLinks(data);
+    console.log("_childrenlinks", _childrenlinks)
+    console.log("links",  links)
+    links.push(..._childrenlinks); //adding every invisible link in the visible one
+    console.log("links", links)
+    RemoveLinks(_childrenlinks, _links);
+    console.log("End of MakeLinksVisble", _links)
+  }
+
+  function MakeLinksInvisible(data){ //we call a visible link and make it invisible
+    console.log("calling getvisiblelinks")
+    let childrenlinks = GetVisibleLinks(data);
+    console.log("childrenlinks", childrenlinks)
+    console.log("links",  _links)
+    _links.push(...childrenlinks); //adding every invisible link in the visible one
+    console.log("_links", _links)
+    RemoveLinks(childrenlinks, links);
+    console.log("End of MakeLinksVisble", links)
+  }
+
+
 // testing functions
 
 // console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
 // console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
-// console.log("links \n _links", links, _links);
 // console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks("VictorHugo"));
 // console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks({id: "VictorHugo"}));
-// console.log("GetInvisibleLinks( B ):", GetInvisibleLinks("Blanck"));
-// console.log("nodes before", nodes);
-// console.log("Testing remove", RemoveNodes(nodes, nodes));
-// console.log("Testing remove links", RemoveLinks(_links, links));
-// console.log("Dataset after removelinks", links)
-// console.log("nodes", nodes)
-// console.log("Testing remove links", RemoveNodes(nodes.slice(0, 2), nodes))
-// console.log("nodes after", nodes);
-// console.log("Vamos testar o passingarguments");
-// console.log("VisibleChildren: \n", PassingArguments("VictorHugo"));
-// console.log("InvisibleChildren: \n", PassingArguments("Blanck"));
+// console.log("GetInvisibleLinks(Blanck):", GetInvisibleLinks("Blanck"));
+// console.log("Testing remove nodes", RemoveNodes(nodes, nodes));
+// console.log("Testing remove links", RemoveLinks(links, links));
+console.log("Links Before: ", links);
+// console.log("Testinf making links invisible do F: ", MakeLinksVisible("F"));
+console.log("Testing MakeVisible function with VictorHugo: ",MakeLinksInvisible("VictorHugo") )
+console.log("Links after: ", links);
 return svg.node();
 }
 
