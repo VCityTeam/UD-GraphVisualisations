@@ -424,6 +424,15 @@ function ForceGraph(
     console.log("End of MakeLinksVisble", links)
   }
 
+  function CheckVisible (data){ // see in _links if everything (source and target)  are  visible and if so make the link visible
+    _links.forEach(_link => {
+      if (_link.source===data.source) {
+        
+      }
+      
+    });
+  }
+
 
 // testing functions
 
@@ -434,10 +443,8 @@ function ForceGraph(
 // console.log("GetInvisibleLinks(Blanck):", GetInvisibleLinks("Blanck"));
 // console.log("Testing remove nodes", RemoveNodes(nodes, nodes));
 // console.log("Testing remove links", RemoveLinks(links, links));
-console.log("Links Before: ", links);
 // console.log("Testinf making links invisible do F: ", MakeLinksVisible("F"));
-console.log("Testing MakeVisible function with VictorHugo: ",MakeLinksInvisible("VictorHugo") )
-console.log("Links after: ", links);
+// console.log("Testing MakeVisible function with VictorHugo: ",MakeLinksInvisible("VictorHugo") )
 return svg.node();
 }
 
