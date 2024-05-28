@@ -98,6 +98,15 @@ Scénario utilisateur basique :
    - ![](./interface-2.drawio.png)
 3. l'ensemble de noeud fils sont requêtés puis affichés.
    - ![](./interface-3.drawio.png)
+4. Rapport (see email from Sylvie Servigne)
+5. Presentation
+   1. 10-15 minutes of slides
+      1. Introduction/context
+      2. Problem
+      3. Current progress
+      4. 5 minute demonstration
+      5. Future work/next steps
+   2. Questions
 
 Implementation des filtres sur le graphe :
 - Type de liens
