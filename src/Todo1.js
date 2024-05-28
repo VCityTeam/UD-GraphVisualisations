@@ -121,11 +121,15 @@ function ForceGraph(
     console.log(target);
     const children = GetVisibleChildren(target.id);
     const _children = GetInvisibleChildren(target.id);
+    const vlinks= GetVisibleLinks(target.id);
+    const invlinks=  GetInvisibleLinks(target.id)
     if (_children.length!=0) {
       MakeChildrenVisible(target.id);
+      // CheckVisible(target.id);
     }
     else{
       MakeChildrenInvisible(target.id);
+      // CheckInvisible(target.id);
     }
 
 
@@ -152,16 +156,16 @@ function ForceGraph(
   //   });
 
 
-  //   node.data(getVisibleNodes(nodes)).join(
-  //     (enter) =>
-  //       enter
-  //         .append("circle")
-  //         .attr("r", 5)
-  //         .attr("fill", (d) => color(d.group)),
-  //     (update) => update,
-  //     (exit) => exit.remove()
-  //   );
-  //   //console.log(node.data());
+    node.data(MakeChildrenVisible(target.id)).join(
+      (enter) =>
+        enter
+          .append("circle")
+          .attr("r", 5)
+          .attr("fill", (d) => color(d.group)),
+      (update) => update,
+      (exit) => exit.remove()
+    );
+    //console.log(node.data());
 
   //   link.data(getVisibleLinks(links)).join(
   //     (enter) =>
