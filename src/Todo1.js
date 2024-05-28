@@ -46,6 +46,8 @@ function ForceGraph(
   let _links = [];
   let nodes = [];
   let _nodes = [];
+  let rawdatanode= [];
+  let rawdatalink= [];
 
 
   if (data.links) {
@@ -54,6 +56,8 @@ function ForceGraph(
 
   if (data._links) {
     _links = data._links.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
+    links.push(..._links); //add a copy of _links to links
+    console.log("links concatenated:", links)
   }
 
   if (data.nodes) {
@@ -62,6 +66,8 @@ function ForceGraph(
 
   if (data._nodes) {
     _nodes = data._nodes.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
+    nodes.push(..._nodes);
+    console.log("nodes concatenated:", nodes)
   }
 
 
@@ -80,6 +86,10 @@ function ForceGraph(
     .force("center", d3.forceCenter(width / 2, height / 2)) // here made all the nodes stay in the same position
     .on("tick", ticked);
 
+    rawdatalink=RemoveLinks(_links, links);
+    _links= rawdatalink
+    _nodes=RemoveNodes(_nodes, nodes);
+    
   // Create the SVG container.
   const svg = d3
     .create("svg")
@@ -111,11 +121,15 @@ function ForceGraph(
     console.log(target);
     const children = GetVisibleChildren(target.id);
     const _children = GetInvisibleChildren(target.id);
+    const vlinks= GetVisibleLinks(target.id);
+    const invlinks=  GetInvisibleLinks(target.id)
     if (_children.length!=0) {
       MakeChildrenVisible(target.id);
+      // CheckVisible(target.id);
     }
     else{
       MakeChildrenInvisible(target.id);
+      // CheckInvisible(target.id);
     }
 
 
@@ -142,16 +156,16 @@ function ForceGraph(
   //   });
 
 
-  //   node.data(getVisibleNodes(nodes)).join(
-  //     (enter) =>
-  //       enter
-  //         .append("circle")
-  //         .attr("r", 5)
-  //         .attr("fill", (d) => color(d.group)),
-  //     (update) => update,
-  //     (exit) => exit.remove()
-  //   );
-  //   //console.log(node.data());
+    node.data(MakeChildrenVisible(target.id)).join(
+      (enter) =>
+        enter
+          .append("circle")
+          .attr("r", 5)
+          .attr("fill", (d) => color(d.group)),
+      (update) => update,
+      (exit) => exit.remove()
+    );
+    //console.log(node.data());
 
   //   link.data(getVisibleLinks(links)).join(
   //     (enter) =>
@@ -305,6 +319,7 @@ function ForceGraph(
   }
 
   function RemoveNodes(nodesToRemove, nodesDataset) {
+    let nodesremoved= []
     let noderemovecopy = nodesToRemove.slice(); // Creating an copy to maninpulate the data 
     noderemovecopy.forEach(node => {
       // console.log("Dataset 0:", nodesDataset[0]);
@@ -319,30 +334,33 @@ function ForceGraph(
         i++;
       }
       while(index >= 0){
-        nodesDataset.splice(index, 1);
         index = -1;
         i=0;
         while (i<nodesDataset.length && index==-1) { //achar a nova primeira posição
           if (nodesDataset[i].id===node.id) {
             index= i;
+            nodesremoved.push(nodesDataset[index]);
+            nodesDataset.splice(index, 1);
           }
           i++;
         }
       }
       
     })
+    return nodesremoved
   }
 
   function RemoveLinks(linksToRemove, linksDataset){
+    let linksremoved= [];
     let linkremovecopy = linksToRemove.slice(); // Creating an copy to maninpulate the data 
-    console.debug("linkstoRemove: ", linksToRemove);
-    console.debug("linksDataset: ", linksDataset);
+    // console.debug("linkstoRemove: ", linksToRemove);
+    // console.debug("linksDataset: ", linksDataset);
     linkremovecopy.forEach(target => {
-      console.debug("Dataset 0:", linksDataset[0]);
-      console.debug("target", target);
+      // console.debug("Dataset 0:", linksDataset[0]);
+      // console.debug("target", target);
       let index=-1;//Defining the first value of index
       let i=0;
-      console.debug("linksDataset.length:", linksDataset.length)
+      // console.debug("linksDataset.length:", linksDataset.length)
 
       while (i<linksDataset.length && index==-1) {
         console.debug("Aqui estamos dentro do while para pegar o primeiro valor do index")
@@ -356,9 +374,9 @@ function ForceGraph(
         if (((linksDataset[i].target.id===target.target.id) && (linksDataset[i].source.id===target.source.id)) || ((linksDataset[i].target.id===target.target) && (linksDataset[i].source.id===target.source))) { //with that if we cover that data that was manipulated and the one that was'nt
           index= i;
         }
-        console.debug("linkdsDataset[i]: ", linksDataset[i]);
-        console.debug("target: ", target);
-        console.debug("index: ", index)
+        // console.debug("linkdsDataset[i]: ", linksDataset[i]);
+        // console.debug("target: ", target);
+        // console.debug("index: ", index)
         i++;
       }
 
@@ -373,15 +391,16 @@ function ForceGraph(
             // console.debug("Source base", linksDataset[i].source)
             // console.debug("Target base", linksDataset[i].target)
             index= i;
+            linksremoved.push(linksDataset[index]);
             linksDataset.splice(index, 1);// deleting only the element of the index
-            console.debug("Dataset0", linksDataset[0])
+            // console.debug("Dataset0", linksDataset[0])
           }
           i++;
         }
       }
 
     })
-     
+     return linksremoved
   }
 
   function MakeChildrenInvisible(data){ //making the visible invisible
@@ -426,10 +445,17 @@ function ForceGraph(
 
   function CheckVisible (data){ // see in _links if everything (source and target)  are  visible and if so make the link visible
     _links.forEach(_link => {
-      if (_link.source===data.source) {
-        
+      if ((((_link.target.id=== data.target.id) && (_links.source.id=== data.source.id)) || ((_link.target.id=== data.target) && (_links.source.id=== data.source)))) {
+        MakeLinksVisible(data)
       }
-      
+    });
+  }
+
+  function CheckInvisible (data){ //see in links if everithyng (source and target) are invisible
+    links.forEach(link => {
+      if ((((link.target.id=== data.target.id) && (links.source.id=== data.source.id)) || ((link.target.id=== data.target) && (links.source.id=== data.source)))) {
+        MakeLinksInvisible(data)
+      }
     });
   }
 
@@ -441,10 +467,16 @@ function ForceGraph(
 // console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks("VictorHugo"));
 // console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks({id: "VictorHugo"}));
 // console.log("GetInvisibleLinks(Blanck):", GetInvisibleLinks("Blanck"));
-// console.log("Testing remove nodes", RemoveNodes(nodes, nodes));
-// console.log("Testing remove links", RemoveLinks(links, links));
+// console.log("Testing remove nodes", RemoveNodes(GetVisibleChildren("VictorHugo"), nodes));
+// console.log("Testing removelinks: ", RemoveLinks(GetVisibleLinks("VictorHugo"), links));
+// console.log("Testing remove links", RemoveLinks(_links, links));
 // console.log("Testinf making links invisible do F: ", MakeLinksVisible("F"));
 // console.log("Testing MakeVisible function with VictorHugo: ",MakeLinksInvisible("VictorHugo") )
+// console.log("Children visible", MakeChildrenVisible("C"))
+console.log("Seeing the structure of _nodes", _nodes)
+console.log("Seeing the structure of nodes", nodes)
+console.log("Seeing the structure of _links", _links)
+console.log("Seeing the structure of links", links)
 return svg.node();
 }
 
