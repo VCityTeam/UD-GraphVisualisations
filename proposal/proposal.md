@@ -11,10 +11,12 @@ gantt
     dateFormat  YYYY-MM-DD
     section Milestones
     Project End         :milestone, 2024-06-28, 1d
-    End of semester     :milestone, 2024-06-21, 1d 
+    Presentation        :milestone, 2024-06-14, 1d
+    End of semester     :milestone, 2024-06-21, 1d
     section Tasks
     Writing             :active, 2024-05-21, 5w
     Graph collapse      :active, t2, 2024-05-21, 2w
+    Prepare pres        :tp, after t2, 2w
     Real-world graphs   :t3, after t2, 2w
     Deploy UD-Viz demo  :t4, after t3, 2w
 ```
