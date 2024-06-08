@@ -56,7 +56,7 @@ function ForceGraph(
   if (data._links) {
     _links = data._links.map((d) => ({ ...d }));//Create an array with name links (this array contains every link)
     links.push(..._links); //add a copy of _links to links
-    // links.forEach((link, index)=> link.id=index)
+    links.forEach((link, index)=> link.id=index)
     // console.log("links concatenated:", links)
   }
 
@@ -130,14 +130,12 @@ function ForceGraph(
     const invlinks=  GetInvisibleLinks(target.id)
     if (_children.length!=0) {
       MakeChildrenVisible(target.id);
-      // RemoveLinks(vlinks, links)
 
       console.log("nodes visible", nodes)
       // CheckVisible(target.id);
     }
     else{
       MakeChildrenInvisible(target.id);
-      // RemoveLinks(target, _links)
       console.log("nodes invisible", _nodes)
       // CheckInvisible(target.id);
     }
@@ -320,26 +318,79 @@ function ForceGraph(
 
 
   function GetVisibleLinks(data) {
-    return links.filter((link) => {
-      if (typeof link.source == 'string') {
-        return link.source === data
-      }
-      else {
-        return link.source.id === data
-      }
+    return links
+      .filter((link) => {
+        return link.source.id === data         
     }); // Return an array that contains every link.source where the name it's equal at thee input
   }
 
   function GetInvisibleLinks(data) {
     return _links
       .filter((link) => { //cheking if the data was touched or not (we use that in the other codes)
-        if (typeof link.source == 'string') {
-          return link.source === data
-        }
-        else {
-          return link.source.id === data
-        }
+        return link.source.id === data
       }); //Return an array that contains every _link.source where the name it's equal the data 
+  }
+
+  function GetVisibleParent(data){ // we are only interessed in the links that this node has with their target
+    console.log("seeing the data in getvisibleparent", data);
+    // let i=0
+    // let j=0
+    // let result = []
+    // for (i; i<data.length; i++) {
+    //   for (j; j<links.length;j++){
+    //     if (data[i].target=links.target) {
+    //       result.push(data[i])}
+    //   }
+    // }
+    // return result
+    
+    let dataused= data.length;
+    let eachtarget = [];
+    let k =0
+    let i=0;
+    let j=0;
+    let result =[]
+    console.log("dataused",dataused)
+    
+    for (k; k < data.length; k++) {
+      eachtarget.push(data[k].target.id);
+    }
+    
+    eachtarget;
+    console.log("eachtarget", eachtarget);
+
+    // for (i;links.length;i++){
+    //   for (j; eachtarget.length;j++){
+    //     if(links[i].target.id===eachtarget[j]){
+    //       result.push(links[i])
+    //     }
+    //   }
+    // }
+    result = links.filter(link => eachtarget.includes(link.target.id));
+
+    console.log("result", result)
+    
+
+    // for (j;j<links.length;j++){
+    //   for(i; i<data.length;i++){
+    //     if (links[j].target.id===data[i].target.id){
+    //       result.push(data[i])
+    //   }
+    //   }
+
+
+      // return links
+      // .filter((parentslinks)=>{
+      //   return parentslinks.target.id===data[i].target
+      // })
+    return result
+  }
+
+  function GetInvisibleParent(data){ // we are only interessed in the links that this node has with their target
+    return _links
+      .filter((link)=>{
+        return link.target.id===data;
+      })
   }
 
   function GetVisibleChildren(data) {// Here in each link we are appling an map function that stands for every 
@@ -443,9 +494,9 @@ function ForceGraph(
       }
 
     })
-    console.log("Dataset após remove:", linksDataset);
-    console.log("os links que eram pra ser removidos", linksToRemove)
-    console.log("links removidos",linksremoved)
+    // console.log("Dataset após remove:", linksDataset);
+    // console.log("os links que eram pra ser removidos", linksToRemove)
+    // console.log("links removidos",linksremoved)
      return copilinksremoved
   }
 
@@ -470,6 +521,8 @@ function ForceGraph(
     MakeLinksInvisible(data);
     console.log("_nodes", _nodes);
     console.log("_links", _links)
+    console.log("nodes", nodes);
+    console.log("links", links);
     console.log("End of MakeChildrenInvisible", nodes);
   }
 
@@ -494,9 +547,10 @@ function ForceGraph(
     console.log("links",  links)
     _links.push(...childrenlinks); //adding every invisible link in the visible one
     console.log("_links", _links)
+    RemoveLinks(GetVisibleParent(childrenlinks), links);
     RemoveLinks(childrenlinks, links);
     console.log("links após remoção", links)
-    console.log("End of MakeLinksVisble", links)
+    console.log("End of MakeLinksInvisble", links)
   }
 
   function CheckVisible (data){ // see in _links if everything (source and target)  are  visible and if so make the link visible
@@ -523,10 +577,11 @@ function ForceGraph(
 // console.log("GetVisibleChildren( VictorHugo ):", GetVisibleChildren("VictorHugo"));
 // console.log("GetInvisibleChildren( B ):", GetInvisibleChildren("Blanck"));
 // console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks("VictorHugo"));
+// console.log("GetVisibleParents:",GetVisibleParent("Valjean"));
 // console.log("GetVisibleLinks(VictorHugo):", GetVisibleLinks({id: "VictorHugo"}));
 // console.log("GetInvisibleLinks(Blanck):", GetInvisibleLinks("Blanck"));
 // console.log("Testing remove nodes", RemoveNodes(GetVisibleChildren("VictorHugo"), nodes));
-// console.log("Testing removelinks: ", RemoveLinks(GetVisibleLinks("VictorHugo"), links));
+// console.log("Testing removelinks: ", RemoveLinks(GetVisibleParent("Valjean"), links));
 // console.log("Testing remove links", RemoveLinks(_links, links));
 // console.log("Testinf making links invisible do F: ", MakeLinksVisible("F"));
 // console.log("Testing MakeVisible function with VictorHugo: ",MakeLinksInvisible("VictorHugo") )
